@@ -5,19 +5,35 @@
                 {{ plaza.descripcion }}
             </div> 
         </div>
-        <div class="p-4">
+        <form class="p-4"
+              autocomplete="off"
+              [formGroup]="plazaForm"
+              (submit)="agregarTarea()">
             <h1 class="text-gray-700 font-semibold"> Nueva tarea </h1>
-            <input type="text" class="shadow border w-full mt-2 rounded p-2" placeholder="Descripción">
+            <input 
+                type="text" 
+                class="shadow border w-full mt-2 rounded p-2 text-gray-700" 
+                formControlName="tarea"
+                placeholder="Descripción">
             <button class="bg-green-500 text-white p-1 rounded shadow mt-3 w-full">
                 Agregar
             </button>
-        </div>
+        </form>
     </div>
 
     <div class="animate__animated animate__zoomIn mt-5 bg-white w-11/12 md:w-11/12 xl:w-1/2 mr-auto ml-auto p-4">
         <h1 class="text-xl text-gray-700"> Listado de tareas </h1>
         <div class="mt-1">
-            <span class="text-gray-500"> No hay ninguna tarea pendiente... </span>
+            <span class="text-gray-500"> {{ plaza.tareas.length === 0 ? 'No hay ninguna tarea pendiente...' : null }} </span>
+            <div class="mt-4">
+                <div *ngFor="let tarea of plaza.tareas" class="flex items-center justify-between shadow p-3 mb-2 rounded border border-l-8 border-green-400 text-gray-700">
+                    <div>
+                        <p> {{ tarea.descripcion }} </p>
+                        <p class="text-xs"> {{ tarea.createdAt }} </p>
+                    </div>
+                    <i (click)="completarTarea(tarea._id)" class="fas fa-check-circle text-3xl text-gray-700 hover:text-green-500 cursor-pointer hover:outline-none"></i>    
+                </div>
+            </div>
         </div>
     </div>
 </div>

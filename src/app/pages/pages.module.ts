@@ -8,6 +8,7 @@ import { GeolocalizarComponent } from './geolocalizar/geolocalizar.component';
 import { PlazasComponent } from './plazas/plazas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

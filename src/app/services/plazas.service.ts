@@ -41,6 +41,7 @@ export class PlazasService {
 
   // Actualizar plaza
   actualizarPlaza(id: string, data: object ): Observable<any>{
+    console.log(data);
     const token = localStorage.getItem('token');
     return this.http.put(`${baseUrl}/plazas/${id}`, data, {headers: {'x-token': token}});
   }
