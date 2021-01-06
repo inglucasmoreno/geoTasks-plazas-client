@@ -6,8 +6,41 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin: 20px;
+    margin-top: 80px;
 }
+
+.map-wrapper-edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 330px;
+  height: 350px;
+}
+
+
+@media (max-width: 1020px) {
+  .map-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 250px;
+  }
+
+  .map-wrapper-edit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin-top: 480px;
+    height: 350px;
+  }
+}
+
   
 .map-border {
   border: 5px solid #10b981;

@@ -30,7 +30,10 @@
                            class="block appearance-none w-full bg-white border border-gray-100 hover:border-gray-300 px-2 py-2 rounded shadow">
                 </div>
                 <div class="flex items-center justify-between mt-4">
-                    <button type="submit" class="focus:outline-none bg-green-400 text-white hover:bg-green-300 transition duration-200 font-semibold py-2 px-4 rounded"> Ingresar </button>
+                    <button [disabled]="loading" [ngClass]="{'bg-green-300':loading, 'bg-green-500':!loading}" class="focus:outline-none text-white hover:bg-green-300 transition duration-200 font-semibold py-2 px-4 rounded"> 
+                        <span *ngIf="!loading"> Ingresar </span>
+                        <span *ngIf="loading"> Cargando <i class="fas fa-spinner animate-spin"></i> </span> 
+                    </button>
                     <a class="no-underline inline-block align-baseline font-semibold text-sm text-green-600 float-right hover:text-green-500 transition duration-200" href="#"> ¿Olvidaste tu contraseña? </a>
                 </div>
             </form>

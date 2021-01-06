@@ -18,6 +18,7 @@ export class PlazasComponent implements OnInit {
   public hasta = 5;
   public filtroActivos: any = '';
   public filtroDescripcion: any = '';
+  public loading = true;
 
   constructor(private plazasService: PlazasService) { }
 
@@ -32,6 +33,7 @@ export class PlazasComponent implements OnInit {
       this.filtroActivos,
       this.filtroDescripcion
     ).subscribe( resp => {
+      this.loading = false;
       this.plazas = resp.plazas;
       this.total = resp.total;
     });

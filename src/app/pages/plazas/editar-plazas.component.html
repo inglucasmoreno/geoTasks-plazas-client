@@ -1,0 +1,39 @@
+<div class="bg-gray-900 h-screen">
+    <div class="bg-white shadow w-11/12 md:w-1/2 xl:w-1/4 mt-3 mr-auto ml-auto">
+        <div>
+            <h1 class="text-xl text-white bg-green-500 p-3"> {{ plaza.descripcion }} </h1>
+        </div>
+            <form 
+                [formGroup]="plazaForm"
+                (submit)="actualizarPlaza()"
+                class="bg-white p-4">
+                <label 
+                    for="descripcion_id"
+                    class="font-semibold "
+                    >
+                    Descripción
+                </label>
+                <input  
+                    id="descripcion_id"
+                    type="text"
+                    class="shadow border p-2 mt-2 rounded w-full"
+                    formControlName="descripcion"
+                    placeholder="Nombre de la plaza"
+                    >
+                <button 
+                    class="shadow border bg-green-500 text-white rounded p-2 mt-3 w-full hover:bg-green-400">
+                    Actualizar
+                </button>
+            </form>
+    </div>
+    
+    <div class="map-wrapper-edit w-11/12 md:w-1/2 mr-auto ml-auto">
+        <div class="bg-green-500 rounded-t p-1 pt-2">
+            <h1 class="text-white text-center"> <i class="fas fa-globe-americas"></i>  Geolocalización </h1>
+        </div>
+        <div class="map-border">
+            <div id="map"></div>
+        </div>
+    </div>
+
+</div>

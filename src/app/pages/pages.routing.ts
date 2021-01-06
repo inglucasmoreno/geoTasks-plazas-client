@@ -7,6 +7,7 @@ import { GeolocalizarComponent } from './geolocalizar/geolocalizar.component';
 import { PlazasComponent } from './plazas/plazas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
+import { EditarPlazasComponent } from './plazas/editar-plazas.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
             { path: 'geolocalizar', canActivate: [AuthGuard] , component: GeolocalizarComponent },
             { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
             { path: 'tareas-plazas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
+            { path: 'editar-plazas/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
             { path: 'usuarios', canActivate: [AuthGuard] , component: UsuariosComponent },
         ]
     }

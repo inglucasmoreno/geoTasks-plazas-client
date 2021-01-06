@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required]
   });
 
+  public loading = false;
+
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router) { }
@@ -23,10 +25,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   login(): void {
+    this.loading = true;
     if (this.loginForm.status === 'VALID'){
-      this.authService.login(this.loginForm.value).subscribe( resp => {
+      this.authService.login(this.loginForm.value).subscribe( () => {
+        this.loading = false;
         this.router.navigateByUrl('dashboard/home');
       }, ({error}) => {
+        this.loading = false;
         let errorMsg;
         if (!error.msg){ errorMsg = 'No hay conexion con el servidor'; }
         else { errorMsg = error.msg; }

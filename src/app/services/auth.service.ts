@@ -54,4 +54,17 @@ export class AuthService {
     );
   }
 
+  // Proteccion de login
+  proteccionLogin(): Observable<any>{
+    const token = localStorage.getItem('token');
+    return this.http.get(`${baseUrl}/auth`, {
+      headers: { 'x-token': token }
+    }).pipe(
+      map(()=>{
+        return false;
+      }),
+      catchError( error => of(true) )
+      );
+  }
+
 }

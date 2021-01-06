@@ -9,6 +9,7 @@ import { PlazasComponent } from './plazas/plazas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditarPlazasComponent } from './plazas/editar-plazas.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     GeolocalizarComponent,
     PlazasComponent,
     UsuariosComponent,
-    TareasPlazasComponent
+    TareasPlazasComponent,
+    EditarPlazasComponent
   ],
   imports: [
     CommonModule,

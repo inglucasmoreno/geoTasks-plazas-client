@@ -12,7 +12,11 @@ import Swal from 'sweetalert2';
 })
 export class TareasPlazasComponent implements OnInit {
 
-  public plaza;
+  public plaza = {
+    _id: '',
+    descripcion: '',
+    tareas: []
+  };
   public plazaForm = this.fb.group({
     tarea: ['', Validators.required]  
   });

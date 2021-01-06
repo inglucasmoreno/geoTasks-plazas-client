@@ -7,10 +7,11 @@ import { PagesRoutingModule } from './pages/pages.routing';
 
 // Componentes
 import { NotpagefoundComponent } from './notpagefound/notpagefound.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: '/dashboard/home'},
-  {path: '**', component: NotpagefoundComponent}
+  {path: '', pathMatch: 'full', canActivate:[AuthGuard], redirectTo: '/dashboard/home'},
+  {path: '**', canActivate:[AuthGuard] ,component: NotpagefoundComponent}
 ];
 
 @NgModule({
