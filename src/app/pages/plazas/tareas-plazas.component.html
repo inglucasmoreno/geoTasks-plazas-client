@@ -1,6 +1,7 @@
 <div class="mt-5 pb-8 bg-gray-900 h-screen">
     <div class="animate__animated animate__zoomIn bg-white w-11/12 md:w-1/2 xl:w-1/4 mr-auto ml-auto">
-        <div class="bg-green-500 p-3 text-white text-xl"> 
+        <div class="flex items-center bg-green-500 p-3 text-white text-xl"> 
+            <i routerLink="/dashboard/plazas" class="fas mr-3 fa-arrow-circle-left cursor-pointer outline-none"></i>                
             <div>
                 <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
                 <span *ngIf="!loading"> {{ plaza.descripcion }} </span>

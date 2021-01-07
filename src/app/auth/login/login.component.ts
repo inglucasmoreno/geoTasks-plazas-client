@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('dashboard/home');
       }, ({error}) => {
         this.loading = false;
+        this.loginForm.reset();
         let errorMsg;
         if (!error.msg){ errorMsg = 'No hay conexion con el servidor'; }
         else { errorMsg = error.msg; }
@@ -43,6 +44,7 @@ export class LoginComponent implements OnInit {
         });
       });
     }else{
+      this.loading = false;
       Swal.fire({
         icon: 'info',
         title: 'Información',

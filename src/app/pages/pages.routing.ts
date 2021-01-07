@@ -17,8 +17,8 @@ const routes: Routes = [
             { path: 'home', canActivate: [AuthGuard] , component: HomeComponent },
             { path: 'geolocalizar', canActivate: [AuthGuard] , component: GeolocalizarComponent },
             { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
-            { path: 'tareas-plazas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
-            { path: 'editar-plazas/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
+            { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
+            { path: 'plazas/editar/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
             { path: 'usuarios', canActivate: [AuthGuard] , component: UsuariosComponent },
         ]
     }
