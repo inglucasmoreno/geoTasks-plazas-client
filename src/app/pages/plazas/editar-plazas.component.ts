@@ -14,6 +14,8 @@ import * as L from 'leaflet';
 })
 export class EditarPlazasComponent implements OnInit {
 
+  public loading = true;
+
   public plaza = { 
     _id: '',
     descripcion: '',
@@ -25,6 +27,7 @@ export class EditarPlazasComponent implements OnInit {
   public map;
   public marker;
   public circle;
+  public id;
 
   public plazaForm = this.fb.group({
     descripcion: ['', Validators.required]
@@ -35,24 +38,29 @@ export class EditarPlazasComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.getPlaza();
+    this.activatedRoute.params.subscribe( ({ id }) => { 
+      this.id = id; 
+      this.plazasService.getPlaza(this.id).subscribe( plaza => {
+        this.plaza = plaza;
+        this.plazaForm.setValue({ descripcion: plaza.descripcion });
+        this.crearMapa();
+        this.actualizarMapa();
+        this.loading = false;
+      });
+    });
   }
   
   getPlaza(): void {
-    this.activatedRoute.params.subscribe( ({ id }) => {
-      this.plazasService.getPlaza(id).subscribe( plaza => {
-        this.plaza = plaza;
-        this.plazaForm.setValue({
-          descripcion: plaza.descripcion
-        });
-        this.crearMapa();
-        this.actualizarMapa();
-      });
+    this.plazasService.getPlaza(this.id).subscribe( plaza => {
+      this.plaza = plaza;
+      this.plazaForm.setValue({ descripcion: plaza.descripcion });
+      this.loading = false;
     });
   }
 
   actualizarPlaza(): void{
     if (this.plazaForm.status === 'VALID'){
+      this.loading = true;
       this.plazasService.actualizarPlaza(this.plaza._id ,this.plazaForm.value).subscribe( () => {
         Swal.fire({
           icon: 'success',
@@ -105,7 +113,6 @@ export class EditarPlazasComponent implements OnInit {
         cancelButtonText: 'No'
       }).then((result) => {
         if (result.isConfirmed) {
-          
           // Se borra el circulo y el marcador
           this.map.removeLayer(this.marker);
           this.map.removeLayer(this.circle);

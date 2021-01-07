@@ -51,6 +51,7 @@ export class PlazasComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading = true;
         this.plazasService.actualizarPlaza(plaza._id, data).subscribe(() => {
           this.listarPlazas();
           Swal.fire({
@@ -73,7 +74,7 @@ export class PlazasComponent implements OnInit {
   }
 
   actualizarDesdeHasta(selector): void {
-
+    this.loading = true;
     if (selector === 'siguiente'){ // Incrementar
       if (this.hasta < this.total){
         this.desde += this.limit;
@@ -92,6 +93,7 @@ export class PlazasComponent implements OnInit {
   }
 
   filtradoPorLista(criterio: string): void {
+    this.loading = true;
     this.filtroActivos = '';
     if (criterio === 'activos') { this.filtroActivos = true; }
     else if (criterio === 'inactivos') { this.filtroActivos = false; }
@@ -99,6 +101,7 @@ export class PlazasComponent implements OnInit {
   }
 
   filtradoPorDescripcion(descripcion: string): void {
+    this.loading = true;
     this.filtroDescripcion = descripcion;
     this.listarPlazas();
   }

@@ -9,15 +9,15 @@
     </div> -->
     <div *ngIf="showMenu" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="lg:block lg:flex-grow ml-0 lg:ml-7 text-gray-800">
-        <a routerLink="/dashboard/home" class="block outline-none lg:inline-block mt-4 lg:mt-0 cursor-pointer md:mr-4 hover:text-green-500"> 
+        <a routerLinkActive="text-green-500" routerLink="/dashboard/home" class="block outline-none lg:inline-block mt-4 lg:mt-0 cursor-pointer md:mr-4 hover:text-green-500"> 
           <i class="fas fa-home mr-1"></i>
           Home
         </a>
-        <a routerLinkActive="active" routerLink="/dashboard/geolocalizar" class="block outline-none lg:inline-block mt-4 lg:mt-0 mr-4 cursor-pointer hover:text-green-500"> 
+        <a routerLinkActive="text-green-500" routerLink="/dashboard/geolocalizar" class="block outline-none lg:inline-block mt-4 lg:mt-0 mr-4 cursor-pointer hover:text-green-500"> 
           <i class="fas fa-globe-americas mr-1"></i>
           Geolocalizar plazas
         </a>
-        <a routerLinkActive="active" routerLink="/dashboard/plazas" class="block outline-none lg:inline-block mt-4 lg:mt-0 cursor-pointer mr-4 hover:text-green-500"> 
+        <a routerLinkActive="text-green-500" routerLink="/dashboard/plazas" class="block outline-none lg:inline-block mt-4 lg:mt-0 cursor-pointer mr-4 hover:text-green-500"> 
           <i class="fas fa-tree mr-1"></i>
           Tus plazas
         </a>

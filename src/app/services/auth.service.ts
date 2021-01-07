@@ -60,7 +60,7 @@ export class AuthService {
     return this.http.get(`${baseUrl}/auth`, {
       headers: { 'x-token': token }
     }).pipe(
-      map(()=>{
+      map(() => {
         return false;
       }),
       catchError( error => of(true) )

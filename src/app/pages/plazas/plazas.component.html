@@ -6,13 +6,8 @@
                     Listado de plazas
                 </span>
             </div>
-            <div *ngIf="loading">
-                <div class="text-xl text-gray-500 p-5">
-                    <i class="fas fa-spinner animate-spin"></i> Cargando datos...
-                </div>
-            </div>
             <!-- component -->
-            <div *ngIf="!loading" class="antialiased font-sans bg-gray-100 shadow">
+            <div class="antialiased font-sans bg-gray-100 shadow">
                 <div class="container mx-auto px-4 sm:px-8">
                     <div class="py-8">
                         <div>
@@ -82,7 +77,7 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody *ngIf="!loading">
                                         <tr class="animate__animated animate__fadeIn" *ngFor="let plaza of plazas">
                                             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                 <div class="flex items-center">
@@ -114,10 +109,10 @@
                                                 <div class="text-center">
                                                     <div class="ml-3 flex items-center justify-center">
                                                         <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                            <i [routerLink]="['/dashboard/tareas-plazas', plaza._id]" class="fas fa-tasks text-xl mr-5 text-gray-600 hover:text-green-500 cursor-pointer"></i>
+                                                            <i [routerLink]="['/dashboard/tareas-plazas', plaza._id]" class="fas fa-tasks text-xl mr-5 text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
                                                         </p>
                                                         <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                            <i [routerLink]="['/dashboard/editar-plazas', plaza._id]" class="fas fa-pencil-alt text-xl text-gray-600 hover:text-green-500 cursor-pointer"></i>
+                                                            <i [routerLink]="['/dashboard/editar-plazas', plaza._id]" class="fas fa-pencil-alt text-xl text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -125,7 +120,11 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <div
+                                <div *ngIf="loading" class="text-gray-500 p-5 text-center">
+                                    <i class="fas fa-spinner animate-spin"></i> Cargando plazas
+                                </div>
+                                <div 
+                                    *ngIf="!loading"
                                     class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                     <span class="text-xs xs:text-sm text-gray-900">
                                         Mostrando {{total > 0 ? desde + 1 : 0 }} - {{ hasta < total ? hasta : total}} de {{ total }} semáforos

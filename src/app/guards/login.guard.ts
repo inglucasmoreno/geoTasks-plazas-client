@@ -8,18 +8,18 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root'
 })
 export class LoginGuard implements CanActivate {
-  
+
   constructor(private authService: AuthService,
               private router: Router){}
-  
+
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean>{      
+    state: RouterStateSnapshot): Observable<boolean>{
     return this.authService.proteccionLogin()
                            .pipe(
                              tap( resp => {
-                               if(!resp){ this.router.navigateByUrl('/dashboard/home') };
+                               if (!resp){ this.router.navigateByUrl('/dashboard/home'); }
                              })
-                           )
-  }  
+                           );
+  }
 }

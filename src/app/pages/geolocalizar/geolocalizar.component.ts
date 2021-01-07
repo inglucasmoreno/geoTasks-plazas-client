@@ -1,5 +1,4 @@
-import { createInjectable } from '@angular/compiler/src/core';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as L from 'leaflet';
 import Swal from 'sweetalert2';
 import { PlazasService } from '../../services/plazas.service';
@@ -8,15 +7,15 @@ import { PlazasService } from '../../services/plazas.service';
   selector: 'app-geolocalizar',
   templateUrl: './geolocalizar.component.html'
 })
-export class GeolocalizarComponent implements AfterViewInit {
+export class GeolocalizarComponent implements OnInit {
 
-  map;
-
+  public map;
   public marcadores = [];
+  public loading = true;
 
   constructor(private plazasService: PlazasService) { }
   
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.crearMapa();
     this.actualizarMapa();
   }
@@ -74,6 +73,8 @@ export class GeolocalizarComponent implements AfterViewInit {
   }
 
   actualizarMapa(): void {
+  
+    this.loading = true;
 
     var greenIcon = L.icon({
       iconUrl: 'assets/leaf-green.png',
@@ -109,7 +110,9 @@ export class GeolocalizarComponent implements AfterViewInit {
     });
     
     this.plazasService.listarPlazas().subscribe( resp => {
-      
+       
+      this.loading = false;
+
       let icon;
       let colorCircle;
       

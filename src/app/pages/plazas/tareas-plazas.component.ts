@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class TareasPlazasComponent implements OnInit {
 
+  public loading = true;
   public plaza = {
     _id: '',
     descripcion: '',
@@ -33,24 +34,26 @@ export class TareasPlazasComponent implements OnInit {
     this.activatedRoute.params.subscribe( ({id}) => {
       this.plazasService.getPlaza(id).subscribe( plaza => {
         this.plaza = plaza;
+        this.loading = false;
       })
     });  
   }
 
   agregarTarea(): void {
     if(this.plazaForm.status === 'VALID'){
+      this.loading = true;
       const tarea = { descripcion: this.plazaForm.value.tarea };
       this.plaza.tareas.push(tarea);
       this.plazasService.actualizarPlaza(this.plaza._id, this.plaza).subscribe(() => {
+        this.plazaForm.reset();
+        this.actualizarLista();
         Swal.fire({
           icon: 'success',
           title: 'Completado',
-          text: 'La tarea ha sido agregada',
+          text: 'Actualización completada',
           showConfirmButton: false,
           timer: 1000
         });
-        this.plazaForm.reset();
-        this.actualizarLista();
       })
     }else{
       Swal.fire({
@@ -59,11 +62,11 @@ export class TareasPlazasComponent implements OnInit {
         text: 'Debe colocar una tarea',
         confirmButtonText: 'Entendido'
       });
-    }
-    
+    }    
   }
 
   completarTarea(idTarea: string): void {
+    this.loading = true;
     this.plaza.tareas = this.plaza.tareas.filter(tarea => tarea._id !== idTarea);
     this.plazasService.actualizarPlaza(this.plaza._id, this.plaza).subscribe(() => {
       Swal.fire({

@@ -1,7 +1,8 @@
 <div class="bg-gray-900 h-screen">
     <div class="bg-white shadow w-11/12 md:w-1/2 xl:w-1/4 mt-3 mr-auto ml-auto">
-        <div>
-            <h1 class="text-xl text-white bg-green-500 p-3"> {{ plaza.descripcion }} </h1>
+        <div class="text-xl text-white bg-green-500 p-3">
+            <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
+            <h1 *ngIf="!loading"> {{ plaza.descripcion }} </h1>
         </div>
             <form 
                 [formGroup]="plazaForm"
@@ -21,7 +22,9 @@
                     placeholder="Nombre de la plaza"
                     >
                 <button 
-                    class="shadow border bg-green-500 text-white rounded p-2 mt-3 w-full hover:bg-green-400">
+                    [disabled]="loading"
+                    [ngClass]="{'bg-green-300 cursor-wait':loading, 'bg-green-500':!loading}"
+                    class="shadow border text-white rounded p-2 mt-3 w-full">
                     Actualizar
                 </button>
             </form>
@@ -29,11 +32,13 @@
     
     <div class="map-wrapper-edit w-11/12 md:w-1/2 mr-auto ml-auto">
         <div class="bg-green-500 rounded-t p-1 pt-2">
-            <h1 class="text-white text-center"> <i class="fas fa-globe-americas"></i>  Geolocalización </h1>
+            <h1 *ngIf="loading" class="text-white text-center"> <i class="fas fa-spinner animate-spin"></i> Cargando geolocalización </h1>
+            <h1 *ngIf="!loading" class="text-white text-center"> <i class="fas fa-globe-americas"></i>  Geolocalización </h1>
         </div>
         <div class="map-border">
             <div id="map"></div>
         </div>
     </div>
+
 
 </div>
