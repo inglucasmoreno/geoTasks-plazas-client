@@ -44,6 +44,8 @@ export class GeolocalizarComponent implements OnInit {
       const { value: plaza } = await Swal.fire({
         title: 'Insertando plaza',
         confirmButtonText: 'Crear nueva plaza',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
         input: 'text',
         inputLabel: 'Ingrese descripción',
         inputPlaceholder: 'Nombre de la plaza',

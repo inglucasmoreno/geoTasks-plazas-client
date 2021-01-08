@@ -2,9 +2,9 @@
     display: block;    
 }
 
-.container {
+.container-loader {
     position: fixed;
-    z-index: 2;
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100%;
@@ -21,8 +21,8 @@
     bottom: 0;
     margin: auto;
     width: 150px;
-    height: 150x;
-    background-image: url('/assets/loader-world.svg');
+    height: 150px;
+    background-image: url('/assets/loader-balls.svg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

@@ -10,6 +10,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditarPlazasComponent } from './plazas/editar-plazas.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { EditarPlazasComponent } from './plazas/editar-plazas.component';
     PlazasComponent,
     UsuariosComponent,
     TareasPlazasComponent,
-    EditarPlazasComponent
+    EditarPlazasComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }
