@@ -21,7 +21,8 @@ export class EditarPlazasComponent implements OnInit {
     descripcion: '',
     tareas: [],
     lat: '',
-    lng: '' 
+    lng: '',
+    fecha_ultima_visita: '' 
   };
 
   public map;
@@ -173,20 +174,20 @@ export class EditarPlazasComponent implements OnInit {
       popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
     });
     
-      let icon;
-      let colorCircle;
+      let icon = greenIcon;
+      let colorCircle = '#4fee48';
       
       // Color del icono y circulo segun la cantidad de tareas pendientes
-      if(this.plaza.tareas.length === 0){
-        icon = greenIcon;
-        colorCircle = '#4fee48';
-      }else if(this.plaza.tareas.length <= 2){
-        icon = orangeIcon;
-        colorCircle = '#edfc3d';
-      }else{
-        icon = redIcon;
-        colorCircle = '#fd4646';
-      }
+      // if(this.plaza.tareas.length === 0){
+      //   icon = greenIcon;
+      //   colorCircle = '#4fee48';
+      // }else if(this.plaza.tareas.length <= 2){
+      //   icon = orangeIcon;
+      //   colorCircle = '#edfc3d';
+      // }else{
+      //   icon = redIcon;
+      //   colorCircle = '#fd4646';
+      // }
 
       let circle = L.circle([Number(this.plaza.lat), Number(this.plaza.lng)],{
         color: colorCircle,

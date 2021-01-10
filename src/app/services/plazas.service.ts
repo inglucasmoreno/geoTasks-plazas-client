@@ -20,7 +20,7 @@ export class PlazasService {
   }
 
   // Listar plazas
-  listarPlazas(limit = 0, desde = 0, activo = '', descripcion = ''): Observable<any>{
+  listarPlazas(limit = 0, desde = 0, activo = null, descripcion = ''): Observable<any>{
     const token = localStorage.getItem('token');
     return this.http.get(`${baseUrl}/plazas`, {
       params: {
