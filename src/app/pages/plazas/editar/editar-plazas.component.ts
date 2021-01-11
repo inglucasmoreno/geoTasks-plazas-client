@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PlazasService } from '../../services/plazas.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PlazasService } from '../../../services/plazas.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import * as L from 'leaflet';
@@ -36,7 +36,8 @@ export class EditarPlazasComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private plazasService: PlazasService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe( ({ id }) => { 
@@ -70,7 +71,8 @@ export class EditarPlazasComponent implements OnInit {
           showConfirmButton: false,
           timer: 1000
         });
-        this.getPlaza();        
+        this.loading = false;
+        this.router.navigateByUrl('/dashboard/plazas');       
       });
     }else{
       Swal.fire({

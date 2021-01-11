@@ -7,7 +7,8 @@ import { GeolocalizarComponent } from './geolocalizar/geolocalizar.component';
 import { PlazasComponent } from './plazas/plazas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
-import { EditarPlazasComponent } from './plazas/editar-plazas.component';
+import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
+import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
 
 const routes: Routes = [
     {
@@ -19,6 +20,7 @@ const routes: Routes = [
             { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
             { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
             { path: 'plazas/editar/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
+            { path: 'plazas/tareas/editar/:id', canActivate: [AuthGuard] , component: EditarTareasComponent },
             { path: 'usuarios', canActivate: [AuthGuard] , component: UsuariosComponent },
         ]
     }

@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { PagesComponent } from './pages.component';
 import { SharedModule } from '../shared/shared.module';
+import { PipesModule } from '../pipes/pipes.module';
+
+import { PagesComponent } from './pages.component';
 import { GeolocalizarComponent } from './geolocalizar/geolocalizar.component';
 import { PlazasComponent } from './plazas/plazas.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { EditarPlazasComponent } from './plazas/editar-plazas.component';
-import { PipesModule } from '../pipes/pipes.module';
+import { HomeComponent } from './home/home.component';
+import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
+import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,7 @@ import { PipesModule } from '../pipes/pipes.module';
     UsuariosComponent,
     TareasPlazasComponent,
     EditarPlazasComponent,
+    EditarTareasComponent,
   ],
   imports: [
     CommonModule,

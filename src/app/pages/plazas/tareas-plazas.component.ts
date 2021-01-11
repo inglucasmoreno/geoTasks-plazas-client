@@ -60,7 +60,6 @@ export class TareasPlazasComponent implements OnInit {
         plaza: this.plaza._id,
         fecha_limite: moment(this.plazaForm.value.fechaLimite).format()
       };
-      // this.plaza.tareas.push(tarea);
       this.tareasService.nuevaTarea(tarea).subscribe(() => {
         this.plazaForm.setValue({
           tarea: '',
@@ -98,7 +97,7 @@ export class TareasPlazasComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.loading = true;
-        this.tareasService.actualizarTarea(idTarea, { activo: false }).subscribe(() => {  // Se actualiza Tarea {activo: false}
+        this.tareasService.actualizarTarea(idTarea, { activo: false, fecha_completada: moment().format() }).subscribe(() => {  // Se actualiza Tarea {activo: false}
           this.plazasService.actualizarPlaza(this.plaza._id, { fecha_ultima_visita: moment().format() }).subscribe(() => {  // Se actualiza fecha ultima visita - Plaza
             Swal.fire({
               icon: 'success',
