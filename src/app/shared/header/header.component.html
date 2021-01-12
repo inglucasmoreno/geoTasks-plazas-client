@@ -1,12 +1,7 @@
 <nav class="flex animate__animated animate__fadeIn bg-white items-center justify-between border-l-8 border-green-500 flex-wrap p-5 shadow">
-    <div class="flex items-center flex-shrink-0 mr-6">
+    <div class="flex items-center flex-shrink-0 justify-between">
       <a routerLink="/dashboard/home" class="ml-0 outline-none lg:ml-2 text-xl text-gray-800 cursor-pointer"> <span class="text-green-500">Geo</span>Tasks - Plazas <i class="fab fa-pagelines text-green-500"></i> </a>
     </div>
-    <!-- <div class="block lg:hidden">
-      <button (click)="toggleMenu()" class="flex outline-none items-center px-3 py-2 border rounded text-white focus:outline-none bg-green-500">
-        <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
-      </button>
-    </div> -->
     <div *ngIf="showMenu" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="lg:block lg:flex-grow ml-0 lg:ml-7 text-gray-800">
         <a routerLinkActive="text-green-500" [routerLinkActiveOptions]="{exact: true}" routerLink="/dashboard/home" class="block outline-none lg:inline-block mt-4 lg:mt-0 cursor-pointer md:mr-4 hover:text-green-500"> 

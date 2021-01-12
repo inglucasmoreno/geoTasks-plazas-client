@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TareasService } from '../../services/tareas.service';
 
 @Component({
   selector: 'app-home',
@@ -9,9 +10,21 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  public totalVencidas = 0;
+  public loading = true;
 
-  ngOnInit(): void {}
+  constructor(private tareasService: TareasService,
+              private router: Router) { }
 
+  ngOnInit(): void {
+    this.listarVencidas();
+  }
+
+  listarVencidas(): void {
+    this.tareasService.listarVencidas().subscribe( ({ totalTareas }) =>{
+      this.totalVencidas = totalTareas;
+      this.loading = false;
+    });
+  }
 
 }

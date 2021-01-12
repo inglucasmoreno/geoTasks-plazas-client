@@ -9,6 +9,7 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
 import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
 import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
+import { AlertasComponent } from './alertas/alertas.component';
 
 const routes: Routes = [
     {
@@ -17,6 +18,7 @@ const routes: Routes = [
         children: [
             { path: 'home', canActivate: [AuthGuard] , component: HomeComponent },
             { path: 'geolocalizar', canActivate: [AuthGuard] , component: GeolocalizarComponent },
+            { path: 'alertas', canActivate: [AuthGuard] , component: AlertasComponent },
             { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
             { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
             { path: 'plazas/editar/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },

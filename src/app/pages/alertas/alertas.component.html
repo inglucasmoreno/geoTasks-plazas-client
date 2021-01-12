@@ -1,0 +1,210 @@
+<div class="mt-6">
+
+    <div *ngIf="totales.porVencer != 0 && !loading" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-yellow-100 text-yellow-700 mt-3 rounded"> 
+        <h2 class="ml-2"> 
+            <i class="fas fa-hourglass-half mr-1"></i>
+            Tareas por vencer 
+        </h2>
+        <h2 class="bg-yellow-500 p-2 px-5 font-semibold text-white text-xl border-gray-500 rounded shadow"> {{ totales.porVencer }} </h2>
+    </div> 
+
+    <div *ngIf="totales.vencidas != 0 && !loading" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-red-100 text-red-700 mt-4 rounded"> 
+        <h2 class="ml-2"> 
+            <i class="fas fa-hourglass-half mr-1"></i>
+            Tareas vencidas
+        </h2>
+        <h2 class="bg-red-500 p-2 px-5 font-semibold text-white text-xl border-gray-500 rounded shadow"> {{ totales.vencidas }} </h2>
+    </div> 
+
+    <div *ngIf="totales.porVencer != 0" class="mt-6 animate__animated animate__zoomIn bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
+        <div class="flex items-center bg-yellow-500 rounded-top text-white p-3 text-xl font-hairline">
+            <i class="fas fa-hourglass-half mr-1"></i>
+            <span class="ml-1">
+                Tareas por vencer
+            </span>
+        </div>
+        <!-- component -->
+        <div class="antialiased font-sans bg-gray-100 shadow">
+            <div class="container mx-auto px-4 sm:px-8">
+                <div class="py-8">
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                        
+                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                            <table class="min-w-full leading-normal">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Plaza
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Tarea
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha creación
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha limite
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!loading">
+                                    <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of porVencer">
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="flex items-center">
+                                                <div>
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{ tarea.plaza.descripcion }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="flex items-center">
+                                                <div>
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{ tarea.descripcion }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-green-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_creacion | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-red-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_limite | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="text-center">
+                                                <div class="ml-3 flex items-center justify-center">
+                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                        <i [routerLink]="['/dashboard/plazas/tareas/', tarea.plaza._id]" class="fas fa-tree text-2xl text-gray-700 hover:text-yellow-500 cursor-pointer outline-none mr-3"></i>
+                                                    </p>
+                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                        <i (click)="completarTarea(tarea._id, tarea.plaza._id)" class="fas fa-check-circle text-2xl text-gray-700 hover:text-yellow-500 cursor-pointer outline-none"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
+                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="totales.vencidas != 0" class="mt-6 animate__animated animate__zoomIn bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
+        <div class="flex items-center bg-red-500 rounded-top text-white p-3 text-xl font-hairline">
+            <i class="fas fa-hourglass-end mr-1"></i>
+            <span class="ml-1">
+                Tareas vencidas
+            </span>
+        </div>
+        <!-- component -->
+        <div class="antialiased font-sans bg-gray-100 shadow">
+            <div class="container mx-auto px-4 sm:px-8">
+                <div class="py-8">
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                        
+                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                            <table class="min-w-full leading-normal">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Plaza
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Tarea
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha creación
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha limite
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Acciones
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!loading">
+                                    <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of vencidas">
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="flex items-center">
+                                                <div>
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{ tarea.plaza.descripcion }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="flex items-center">
+                                                <div>
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{ tarea.descripcion }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-green-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_creacion | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-red-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_limite | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="text-center">
+                                                <div class="ml-3 flex items-center justify-center">
+                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                        <i [routerLink]="['/dashboard/plazas/tareas/', tarea.plaza._id]" class="fas fa-tree text-2xl text-gray-700 hover:text-red-500 cursor-pointer outline-none mr-3"></i>
+                                                    </p>
+                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                        <i (click)="completarTarea(tarea._id, tarea.plaza._id)" class="fas fa-check-circle text-2xl text-gray-700 hover:text-red-500 cursor-pointer outline-none"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
+                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br><br><br>
+
+
+</div>

@@ -9,7 +9,7 @@ export class FechaPipe implements PipeTransform {
 
     // Mostrar: Ajuste de formato para muestra por pantalla
     if(tipo === 'mostrar'){
-      return moment(fecha).format('DD-MM-YYYY');
+      return moment(fecha).format('DD/MM/YYYY');
     }
 
     // Comparar: Comparacion para manejar estilos

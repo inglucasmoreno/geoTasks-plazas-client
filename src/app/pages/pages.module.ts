@@ -14,6 +14,7 @@ import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
 import { HomeComponent } from './home/home.component';
 import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
 import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
+import { AlertasComponent } from './alertas/alertas.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
     TareasPlazasComponent,
     EditarPlazasComponent,
     EditarTareasComponent,
+    AlertasComponent,
   ],
   imports: [
     CommonModule,

@@ -13,7 +13,6 @@ export class TareasService {
 
   constructor(private http: HttpClient) { }
   
-
   // Tarea por ID
   getTarea(idTarea): Observable<any>{
     const token = localStorage.getItem('token');
@@ -38,6 +37,14 @@ export class TareasService {
       {
         'x-token': token
       }});
+  }
+
+  // Listar tareas vencidas
+  listarVencidas(): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${baseUrl}/tareas/listar/vencidas`, {
+      headers:{'x-token': token}
+    });
   }
 
   // Actualizar tarea
