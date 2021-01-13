@@ -40,9 +40,29 @@ export class TareasService {
   }
 
   // Listar tareas vencidas
-  listarVencidas(): Observable<any> {
+  listarVencidas(
+    desdeTareas = 0, 
+    hastaTareas = 0, 
+    desdePorVencer = 0,
+    hastaPorVencer= 0,
+    desdeVencidas = 0,
+    hastaVencidas = 0,
+    descripcionPorVencer = '',
+    descripcionVencidas = ''
+    ): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(`${baseUrl}/tareas/listar/vencidas`, {
+    return this.http.get(`${baseUrl}/tareas/listar/vencidas`, 
+    {
+      params:{
+        desdeTareas: String(desdeTareas),
+        hastaTareas: String(hastaTareas),
+        desdeVencidas: String(desdeVencidas),
+        hastaVencidas: String(hastaVencidas),
+        desdePorVencer: String(desdePorVencer),
+        hastaPorVencer: String(hastaPorVencer),
+        descripcionPorVencer,
+        descripcionVencidas
+      },
       headers:{'x-token': token}
     });
   }

@@ -18,11 +18,25 @@ export class AlertasComponent implements OnInit {
     porVencer: 0,
     todas: 0
   }
+
+  public paginador = {
+    desdeTareas: 0,
+    hastaTareas: 5,
+    desdePorVencer: 0,
+    hastaPorVencer: 5,
+    desdeVencidas: 0,
+    hastaVencidas: 5,
+    limit: 5
+  }
   
   public porVencer = {};
   public vencidas = {};
+  public filtroDescripcionVencidas = '';
+  public filtroDescripcionPorVencer = '';
 
   public loading = true;
+  public loadingPorVencer = false;
+  public loadingVencidas = false;
 
   constructor(private tareasService: TareasService,
               private plazasService: PlazasService,
@@ -33,8 +47,14 @@ export class AlertasComponent implements OnInit {
   }
 
   listarTareas(): void {
-    this.tareasService.listarVencidas().subscribe( resp => {
-      console.log(resp);
+    this.tareasService.listarVencidas(
+      this.paginador.desdeTareas,
+      this.paginador.hastaTareas,
+      this.paginador.desdePorVencer,
+      this.paginador.hastaPorVencer,
+      this.paginador.desdeVencidas,
+      this.paginador.hastaVencidas,
+    ).subscribe( resp => {
       this.porVencer = resp.porVencer;
       this.vencidas = resp.vencidas;
       this.totales.porVencer = resp.totalPorVencer;
@@ -43,6 +63,38 @@ export class AlertasComponent implements OnInit {
       this.loading = false;
       if(resp.totalTareas === 0) this.router.navigateByUrl('/dashboard/home');
     });
+  }
+
+  listarPorVencer(): void {
+    this.tareasService.listarVencidas(
+      this.paginador.desdeTareas,
+      this.paginador.hastaTareas,
+      this.paginador.desdePorVencer,
+      this.paginador.hastaPorVencer,
+      this.paginador.desdeVencidas,
+      this.paginador.hastaVencidas,
+      this.filtroDescripcionPorVencer,
+      this.filtroDescripcionVencidas
+    ).subscribe( resp => {
+      this.porVencer = resp.porVencer;
+      this.loadingPorVencer = false;
+    });    
+  }
+
+  listarVencidas(): void {
+    this.tareasService.listarVencidas(
+      this.paginador.desdeTareas,
+      this.paginador.hastaTareas,
+      this.paginador.desdePorVencer,
+      this.paginador.hastaPorVencer,
+      this.paginador.desdeVencidas,
+      this.paginador.hastaVencidas,
+      this.filtroDescripcionPorVencer,
+      this.filtroDescripcionVencidas
+    ).subscribe( resp => {
+      this.vencidas = resp.vencidas;
+      this.loadingVencidas = false;
+    });    
   }
 
   completarTarea(idTarea: string, idPlaza: string): void {
@@ -72,6 +124,54 @@ export class AlertasComponent implements OnInit {
       })
       }
     });
+  }
+
+  paginadorPorVencer(selector: string): void{
+    this.loadingPorVencer = true;
+    if (selector === 'siguiente'){ // Incrementar
+      if (this.paginador.hastaPorVencer < this.totales.porVencer){
+        this.paginador.desdePorVencer += this.paginador.limit;
+        this.paginador.hastaPorVencer += this.paginador.limit;
+      }
+    }else{                         // Decrementar
+      this.paginador.desdePorVencer -= this.paginador.limit;
+      if (this.paginador.desdePorVencer < 0){
+        this.paginador.desdePorVencer = 0;
+      }else{
+        this.paginador.hastaPorVencer -= this.paginador.limit;
+      }
+    }
+    this.listarPorVencer();  
+  }
+
+  paginadorVencidas(selector: string): void{
+    this.loadingVencidas = true;
+    if (selector === 'siguiente'){ // Incrementar
+      if (this.paginador.hastaVencidas < this.totales.vencidas){
+        this.paginador.desdeVencidas += this.paginador.limit;
+        this.paginador.hastaVencidas += this.paginador.limit;
+      }
+    }else{                         // Decrementar
+      this.paginador.desdeVencidas -= this.paginador.limit;
+      if (this.paginador.desdeVencidas < 0){
+        this.paginador.desdeVencidas = 0;
+      }else{
+        this.paginador.hastaVencidas -= this.paginador.limit;
+      }
+    }
+    this.listarVencidas();  
+  }
+
+  filtradoDescripcionPorVencer(filtro: string){
+    this.loadingPorVencer = true;
+    this.filtroDescripcionPorVencer = filtro;
+    this.listarPorVencer();
+  }
+
+  filtradoDescripcionVencidas(filtro: string){
+    this.loadingVencidas = true;
+    this.filtroDescripcionVencidas = filtro;
+    this.listarVencidas();
   }
 
 }

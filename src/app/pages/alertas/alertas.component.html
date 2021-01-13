@@ -1,6 +1,6 @@
 <div class="mt-6">
 
-    <div *ngIf="totales.porVencer != 0 && !loading" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-yellow-100 text-yellow-700 mt-3 rounded"> 
+    <div *ngIf="totales.porVencer != 0" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-yellow-100 text-yellow-700 mt-3 rounded"> 
         <h2 class="ml-2"> 
             <i class="fas fa-hourglass-half mr-1"></i>
             Tareas por vencer 
@@ -8,9 +8,9 @@
         <h2 class="bg-yellow-500 p-2 px-5 font-semibold text-white text-xl border-gray-500 rounded shadow"> {{ totales.porVencer }} </h2>
     </div> 
 
-    <div *ngIf="totales.vencidas != 0 && !loading" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-red-100 text-red-700 mt-4 rounded"> 
+    <div *ngIf="totales.vencidas != 0" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-red-100 text-red-700 mt-4 rounded"> 
         <h2 class="ml-2"> 
-            <i class="fas fa-hourglass-half mr-1"></i>
+            <i class="fas fa-hourglass-end mr-1"></i>
             Tareas vencidas
         </h2>
         <h2 class="bg-red-500 p-2 px-5 font-semibold text-white text-xl border-gray-500 rounded shadow"> {{ totales.vencidas }} </h2>
@@ -27,8 +27,24 @@
         <div class="antialiased font-sans bg-gray-100 shadow">
             <div class="container mx-auto px-4 sm:px-8">
                 <div class="py-8">
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        
+                    <div class="md:flex items-center md:justify-between mr-3">
+                        <div class="my-2 flex sm:flex-row flex-col">
+                            <div class="block relative">
+                                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                        <path
+                                            d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <input #txtDescripcion
+                                       (keyup)="filtradoDescripcionPorVencer(txtDescripcion.value)" 
+                                       placeholder="Tarea"
+                                       class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto"> 
                         <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                             <table class="min-w-full leading-normal">
                                 <thead>
@@ -103,6 +119,23 @@
                             <div *ngIf="loading" class="text-gray-500 p-5 text-center">
                                 <i class="fas fa-spinner animate-spin"></i> Cargando tareas
                             </div>
+                            <div 
+                            *ngIf="!loading"
+                            class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                                <span class="text-xs xs:text-sm text-gray-900">
+                                    Mostrando {{totales.porVencer> 0 ? paginador.desdePorVencer + 1 : 0 }} - {{ paginador.hastaPorVencer < totales.porVencer ? paginador.hastaPorVencer : totales.porVencer}} de {{ totales.porVencer }} tareas
+                                </span>
+                                <div class="inline-flex mt-2 xs:mt-0">
+                                    <button (click)="paginadorPorVencer('anterior')"
+                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                        Anterior
+                                    </button>
+                                    <button (click)="paginadorPorVencer('siguiente')"
+                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                        Siguiente
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,8 +154,24 @@
         <div class="antialiased font-sans bg-gray-100 shadow">
             <div class="container mx-auto px-4 sm:px-8">
                 <div class="py-8">
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        
+                    <div class="md:flex items-center md:justify-between mr-3">
+                        <div class="my-2 flex sm:flex-row flex-col">
+                            <div class="block relative">
+                                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                        <path
+                                            d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <input #txtDescripcion
+                                       (keyup)="filtradoDescripcionVencidas(txtDescripcion.value)" 
+                                       placeholder="Tarea"
+                                       class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">     
                         <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                             <table class="min-w-full leading-normal">
                                 <thead>
@@ -196,6 +245,23 @@
                             </table>
                             <div *ngIf="loading" class="text-gray-500 p-5 text-center">
                                 <i class="fas fa-spinner animate-spin"></i> Cargando tareas
+                            </div>
+                            <div 
+                            *ngIf="!loading"
+                            class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                                <span class="text-xs xs:text-sm text-gray-900">
+                                    Mostrando {{totales.vencidas> 0 ? paginador.desdeVencidas + 1 : 0 }} - {{ paginador.hastaVencidas < totales.vencidas ? paginador.hastaVencidas : totales.vencidas}} de {{ totales.vencidas }} tareas
+                                </span>
+                                <div class="inline-flex mt-2 xs:mt-0">
+                                    <button (click)="paginadorVencidas('anterior')"
+                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                        Anterior
+                                    </button>
+                                    <button (click)="paginadorVencidas('siguiente')"
+                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                        Siguiente
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
