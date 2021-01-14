@@ -47,7 +47,7 @@ export class TareasPlazasComponent implements OnInit {
   listarTareas(id: string): void {
     this.tareasService.listarTarea(id, true).subscribe( resp => {
       this.tareas = resp.tareas;
-      this.totalTareas = resp.total;
+      this.totalTareas = resp.totalTareas;
       this.loading = false;
     });
   }
