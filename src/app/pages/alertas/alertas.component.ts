@@ -42,6 +42,10 @@ export class AlertasComponent implements OnInit {
               private plazasService: PlazasService,
               private router: Router) {}
 
+  probando(): void {
+    this.tareasService.toggle();
+  }
+
   ngOnInit(): void {
     this.listarTareas();
   }

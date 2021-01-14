@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { TareasService } from 'src/app/services/tareas.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,11 +11,26 @@ import { AuthService } from '../../services/auth.service';
 export class HeaderComponent implements OnInit {
 
   public showMenu = true;
+  public showAlert = false;
 
-  constructor(private router: Router,
-              private authService: AuthService) { }
+  constructor(private tareasService: TareasService,
+              private authService: AuthService,) { }
 
   ngOnInit(): void {
+    this.tareasService.change.subscribe( isOpen => { this.showAlert = isOpen; });
+    this.mostrarAlertas();
+  }
+
+  mostrarAlertas(): void {
+    this.tareasService.listarVencidas().subscribe(resp =>{
+      console.log(resp);
+      if(resp.totalTareas > 0){
+        this.showAlert = true;
+      }else{
+        this.showAlert = false;
+      }
+      console.log(this.showAlert);
+    });
   }
 
   logout(): void{
