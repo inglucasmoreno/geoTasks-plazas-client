@@ -40,6 +40,7 @@ export class TareasPlazasComponent implements OnInit {
       this.plazasService.getPlaza(id).subscribe( (plaza: any) => {
         this.plaza = plaza;
         this.listarTareas(id);
+        this.tareasService.actualizarAlerta().subscribe();
       })
     });
   }

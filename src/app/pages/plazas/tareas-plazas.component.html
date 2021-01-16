@@ -38,11 +38,14 @@
 
 
     <div class="mt-6 animate__animated animate__zoomIn bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
-        <div class="flex items-center bg-green-500 rounded-top text-white p-3 text-2xl font-hairline">
-            <i class="fas fa-tasks mr-1"></i>
-            <span class="ml-1">
-                Listado de tareas
-            </span>
+        <div class="flex items-center justify-between bg-green-500 rounded-top text-2xl text-white p-3 font-hairline">
+            <div class="flex items-center">
+                <i class="fas fa-tasks mr-1"></i>
+                <span class="ml-1"> Listado de tareas </span>
+            </div>
+            <a [routerLink]="['/dashboard/plazas/tareas/historial', plaza._id]" class="border bg-white shadow rounded px-3 py-1 md:mr-4">
+                <i class="fas fa-history text-xl text-gray-600"></i>
+            </a>
         </div>
         <div *ngIf="tareas.length == 0" class="bg-white text-md text-gray-500 p-4">
             <h1> No hay ninguna tareas pendientes... </h1>

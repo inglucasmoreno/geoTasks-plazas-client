@@ -1,0 +1,107 @@
+<div class="bg-gray-900 h-screen mt-5">
+    <div class="w-11/12 w-11/12 md:w-1/2 shadow rounded mr-auto ml-auto bg-white">
+        <div class="text-white bg-green-500 p-2">
+            <div *ngIf="!loading" class="ml-2 flex items-center">
+                <i routerLink="/dashboard/plazas" class="fas mr-2 text-2xl fa-arrow-circle-left cursor-pointer outline-none"></i>
+                <div class="ml-1">
+                    <h1 class="text-xl"> {{ plaza.descripcion }} </h1>
+                    <h3 class="text-xs font-semibold"> Historial de Tareas </h3>
+                </div>
+            </div>
+            <div *ngIf="loading" class="p-2"> 
+                <span> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span> 
+            </div>
+        </div>
+        <div *ngIf="totalCompletadas === 0" class="bg-white p-3">
+            <p class="text-gray-500"> No hay tareas completadas en esta plaza </p>
+        </div>
+        <!-- Tabla -->
+        <div *ngIf="totalCompletadas !== 0" class="antialiased font-sans bg-gray-100 shadow">
+            <div class="container mx-auto px-4 sm:px-8">
+                <div class="py-8">
+                    <div>
+                        <h2 class="text-xl text-gray-700 font-semibold leading-tight"> Tareas completadas ({{ totalCompletadas }}) </h2> 
+                    </div>
+                    <div class="md:flex items-center md:justify-between mr-3">
+                       
+                    </div>
+                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                        
+                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                            <table class="min-w-full leading-normal">
+                                <thead>
+                                    <tr>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Descripción
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha creación
+                                        </th>
+                                        <th
+                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha limite
+                                        </th>
+                                        <th
+                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                            Fecha completada
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="!loading">
+                                    <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'completada':tarea.fecha_completada) == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of tareas">
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                            <div class="flex items-center">
+                                                <div>
+                                                    <p class="text-gray-900 whitespace-no-wrap">
+                                                        {{ tarea.descripcion }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-green-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_creacion | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-red-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_limite | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                            <p class="text-gray-700 font-semibold whitespace-no-wrap">
+                                                {{ tarea.fecha_completada | fecha:'mostrar'}}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
+                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
+                            </div>
+                            <div 
+                            *ngIf="!loading"
+                            class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
+                            <span class="text-xs xs:text-sm text-gray-900">
+                                Mostrando {{totalCompletadas > 0 ? desde + 1 : 0 }} - {{ hasta < totalCompletadas ? hasta : totalCompletadas}} de {{ totalCompletadas }} plazas
+                            </span>
+                            <div class="inline-flex mt-2 xs:mt-0">
+                                <button (click)="paginador('anterior')"
+                                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                    Anterior
+                                </button>
+                                <button (click)="paginador('siguiente')"
+                                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                    Siguiente
+                                </button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

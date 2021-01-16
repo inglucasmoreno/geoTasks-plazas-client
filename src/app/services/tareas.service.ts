@@ -2,7 +2,7 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 const baseUrl = environment.base_url;
 
@@ -11,21 +11,27 @@ const baseUrl = environment.base_url;
 })
 export class TareasService {
 
-  public isOpen = false;
+  public showAlert = false;
 
   constructor(private http: HttpClient) { }
   
   @Output() change: EventEmitter<boolean> = new EventEmitter();
 
-  // Testing
-  toggle() {
-    this.isOpen = !this.isOpen;
-    this.change.emit(this.isOpen);
-    console.log(this.isOpen);
+  // Listar tareas por plaza
+  tareasPlaza(idPlaza: string, desde = 0, hasta = 0): Observable<any>{
+    const token = localStorage.getItem('token');
+    return this.http.get(`${baseUrl}/tareas/listar/plaza/${idPlaza}`, {
+      headers: {'x-token': token},
+      params: {
+        activo: 'false',
+        desde: String(desde),
+        hasta: String(hasta)
+      }
+    });  
   }
 
   // Tarea por ID
-  getTarea(idTarea): Observable<any>{
+  getTarea(idTarea: string): Observable<any>{
     const token = localStorage.getItem('token');
     return this.http.get(`${baseUrl}/tareas/${idTarea}`,{headers:{'x-token': token}})
                     .pipe( map( (resp: any) => resp.tarea ) );
@@ -75,13 +81,32 @@ export class TareasService {
         descripcionVencidas
       },
       headers:{'x-token': token}
-    });
+    }).pipe(
+      tap(({totalTareas}) => {
+        if(totalTareas > 0) this.showAlert = true;
+        else this.showAlert = false;
+        this.change.emit(this.showAlert);
+      })
+    )
   }
 
   // Actualizar tarea
   actualizarTarea(idTarea: string, data: any): Observable<any>{
     const token = localStorage.getItem('token');
     return this.http.put(`${baseUrl}/tareas/${idTarea}`, data, {headers:{'x-token': token}});
+  }
+
+  // Actualizar alerta
+  actualizarAlerta(): Observable<any>{
+    const token = localStorage.getItem('token');
+    return this.http.get(`${baseUrl}/tareas/listar/vencidas`, {headers: {'x-token': token}})
+                    .pipe(
+                      tap(({totalTareas}) => {
+                        if(totalTareas > 0) this.showAlert = true;
+                        else this.showAlert = false;
+                        this.change.emit(this.showAlert);
+                      })
+                    )
   }
 
 }

@@ -3,7 +3,6 @@ import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { TareasService } from '../../services/tareas.service';
 import { PlazasService } from '../../services/plazas.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-alertas',
@@ -39,12 +38,7 @@ export class AlertasComponent implements OnInit {
   public loadingVencidas = false;
 
   constructor(private tareasService: TareasService,
-              private plazasService: PlazasService,
-              private router: Router) {}
-
-  probando(): void {
-    this.tareasService.toggle();
-  }
+              private plazasService: PlazasService) {}
 
   ngOnInit(): void {
     this.listarTareas();
@@ -65,7 +59,6 @@ export class AlertasComponent implements OnInit {
       this.totales.vencidas = resp.totalVencidas;  
       this.totales.todas = resp.totalTareas;
       this.loading = false;
-      if(resp.totalTareas === 0) this.router.navigateByUrl('/dashboard/home');
     });
   }
 

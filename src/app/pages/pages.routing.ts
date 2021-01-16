@@ -10,6 +10,7 @@ import { TareasPlazasComponent } from './plazas/tareas-plazas.component';
 import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
 import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
 import { AlertasComponent } from './alertas/alertas.component';
+import { TareasHistorialComponent } from './plazas/tareas-historial.component';
 
 const routes: Routes = [
     {
@@ -23,6 +24,7 @@ const routes: Routes = [
             { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
             { path: 'plazas/editar/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
             { path: 'plazas/tareas/editar/:id', canActivate: [AuthGuard] , component: EditarTareasComponent },
+            { path: 'plazas/tareas/historial/:id', canActivate: [AuthGuard] , component: TareasHistorialComponent },
             { path: 'usuarios', canActivate: [AuthGuard] , component: UsuariosComponent },
         ]
     }

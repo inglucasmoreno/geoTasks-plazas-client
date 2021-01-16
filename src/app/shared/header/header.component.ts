@@ -17,19 +17,17 @@ export class HeaderComponent implements OnInit {
               private authService: AuthService,) { }
 
   ngOnInit(): void {
-    this.tareasService.change.subscribe( isOpen => { this.showAlert = isOpen; });
+    this.tareasService.change.subscribe( showAlert => { this.showAlert = showAlert; });
     this.mostrarAlertas();
   }
 
   mostrarAlertas(): void {
     this.tareasService.listarVencidas().subscribe(resp =>{
-      console.log(resp);
       if(resp.totalTareas > 0){
         this.showAlert = true;
       }else{
         this.showAlert = false;
       }
-      console.log(this.showAlert);
     });
   }
 

@@ -13,9 +13,9 @@ export class PlazasComponent implements OnInit {
 
   public plazas: Plaza[] = [];
   public total = 0;
-  public limit = 5;
+  public limit = 10;
   public desde = 0;
-  public hasta = 5;
+  public hasta = 10;
   public filtroActivos: any = '';
   public filtroDescripcion: any = '';
   public loading = true;

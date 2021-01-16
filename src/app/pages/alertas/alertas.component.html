@@ -1,7 +1,25 @@
-<div class="mt-6">
 
-    <button (click)="probando()" class="border bg-red-200 rounded p-2"> Probando </button>
+<div class="mt-6 bg-gray-900 h-screen" *ngIf="totales.todas == 0 && !loading">
+    <div class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 mr-auto ml-auto shadow bg-white rounded text-gray-500">
+        <div class="flex items-center p-3 bg-green-500 text-white text-xl">
+            <i routerLink="/dashboard/home" class="fas mr-2 fa-arrow-circle-left cursor-pointer outline-none"></i>
+            <h1 class=""> Alertas del sistema </h1>
+        </div>
+        <p class="p-5"> No hay notificaciones disponibles </p>
+    </div>
+</div>
 
+<div class="mt-6 bg-gray-900 h-screen" *ngIf="loading">
+    <div class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 mr-auto ml-auto shadow bg-white rounded text-gray-500">
+        <div class="flex items-center p-3 bg-green-500 text-white text-xl">
+            <i routerLink="/dashboard/home" class="fas mr-2 fa-arrow-circle-left cursor-pointer outline-none"></i>
+            <h1 class=""> Alertas del sistema </h1>
+        </div>
+        <p class="p-5" *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando tareas </p> 
+    </div>
+</div>
+
+<div class="mt-6 bg-gray-900 h-screen" *ngIf="totales.todas > 0 && !loading">
     <div *ngIf="totales.porVencer != 0" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-yellow-100 text-yellow-700 mt-3 rounded"> 
         <h2 class="ml-2"> 
             <i class="fas fa-hourglass-half mr-1"></i>
