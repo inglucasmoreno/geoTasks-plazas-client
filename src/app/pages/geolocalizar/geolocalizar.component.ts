@@ -181,8 +181,9 @@ export class GeolocalizarComponent implements OnInit {
             <div class="flex px-1 items-center justify-between border-l-8 border-red-500 font-semibold">
               <h1> Vencidas </h1>
               <span class="p-1"> ${totalVencidas} </span>
-            </div>     
-          </div>
+            </div>
+            </div>
+            <button onclick="location.href='dashboard/plazas/tareas/${m._id}'" routerLink="dashboard/plazas" class="text-white bg-green-500 p-2 shadow rounded w-full mt-2"> Ir a plaza </button>     
           `);
           marker.addTo(this.map);
           circle.addTo(this.map);

@@ -22,6 +22,8 @@
     "@types/leaflet": "^1.5.19",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
+    "pdfmake": "^0.1.70",
+    "pdfmake-wrapper": "^2.1.1",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.12.7",
     "tslib": "^2.0.0",

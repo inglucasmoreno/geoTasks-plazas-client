@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import Swal from 'sweetalert2';
+import {PdfMakeWrapper, Table, Txt} from 'pdfmake-wrapper';
+
 import { Plaza } from '../../models/plaza.model';
 import { PlazasService } from '../../services/plazas.service';
+
+type TableRow = [string, string];
 
 @Component({
   selector: 'app-plazas',
@@ -9,21 +14,95 @@ import { PlazasService } from '../../services/plazas.service';
   styles: [
   ]
 })
+
 export class PlazasComponent implements OnInit {
 
   public plazas: Plaza[] = [];
+  
+  // Paginador y filtrado
   public total = 0;
   public limit = 10;
   public desde = 0;
   public hasta = 10;
   public filtroActivos: any = '';
   public filtroDescripcion: any = '';
+  
+  // Loading
   public loading = true;
 
+  // Reporte
+  public plazasReporte: Plaza[] = [];
+  public totalReporte = 0;
+  
   constructor(private plazasService: PlazasService) { }
 
   ngOnInit(): void {
     this.listarPlazas();
+  }
+
+  // Generar reporte
+  generarReporte(): void{  
+    this.plazasService.listarPlazas(0,0,true).subscribe( resp => {
+      this.plazasReporte = resp.plazas;
+      this.totalReporte = resp.total;
+      this.reporte();
+    });
+  }
+
+  // Reporte de las plazas en PDF
+  reporte(): void {
+    
+    // Fecha de hoy
+    const hoy = moment().format('DD/MM/YYYY');
+    
+    // Instancia de pdfMakeWrapper
+    const pdf = new PdfMakeWrapper();
+  
+    pdf.info({
+      title: `Reporte plazas | ${hoy}`,
+      author: 'GeoTasks - Plazas',
+      subject: 'Reportes'
+    });
+    
+    // Cabecera
+    const header = new Txt(`MUNICIPALIDAD DE LA CIUDAD DE SAN LUIS`).alignment('center')
+                                                                    .margin(20)
+                                                                    .bold()
+                                                                    .fontSize(13)
+                                                                    .end;
+    
+    // Titulo
+    const titulo = new Txt(`Reporte de plazas | Fecha - ${hoy}`).margin([0,30,0,0]).end;
+
+    // Subtitulo
+    const subTitulo = new Txt(`PLAZAS TOTALES: ${this.totalReporte}`).bold().margin([0,10,0,0]).end;
+
+    // Tabla
+    const plazas = this.extractData();
+    const tabla = new Table([
+      [new Txt(`Descripción`).bold().end, new Txt('Ultima visita').bold().end],
+      ...plazas
+    ])
+    .alignment('justify')
+    .widths(['*', 100])
+    .margin([0,10,0,0])
+    .layout({
+      fillColor: (rowIndex: number, node: any, columnIndex: number) => {
+        return rowIndex === 0 ? '#CCCCCC' : '';
+      },    
+    }).end;
+    
+    // GENERACION DEL REPORTE EN PDF
+    // pdf.pageOrientation('landscape');
+    pdf.header(header);  // Agrega cabecera
+    pdf.add(titulo);     // Agrega titulo
+    pdf.add(subTitulo);  // Agrega subtitulo
+    pdf.add(tabla);      // Agrega Tabla
+    pdf.create().open(); // Se genera PDF y se abre en otra pestaña  
+  }
+
+  extractData(): any{
+    return this.plazasReporte.map( plaza => [plaza.descripcion, moment(plaza.fecha_ultima_visita).format('DD/MM/YYYY')] );
   }
 
   listarPlazas(): void{
@@ -35,6 +114,7 @@ export class PlazasComponent implements OnInit {
     ).subscribe( resp => {
       this.loading = false;
       this.plazas = resp.plazas;
+      this.plazasReporte = resp.plazas;
       this.total = resp.total;
     });
   }
