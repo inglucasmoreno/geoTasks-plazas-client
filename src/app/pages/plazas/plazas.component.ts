@@ -72,10 +72,10 @@ export class PlazasComponent implements OnInit {
                                                                     .end;
     
     // Titulo
-    const titulo = new Txt(`Reporte de plazas | Fecha - ${hoy}`).margin([0,30,0,0]).end;
+    const titulo = new Txt(`Reporte de plazas | Fecha - ${hoy}`).margin([0,30,0,0]).fontSize(14).end;
 
     // Subtitulo
-    const subTitulo = new Txt(`PLAZAS TOTALES: ${this.totalReporte}`).bold().margin([0,10,0,0]).end;
+    const subTitulo = new Txt(`PLAZAS TOTALES: ${this.totalReporte}`).bold().fontSize(11).margin([0,10,0,0]).end;
 
     // Tabla
     const plazas = this.extractData();

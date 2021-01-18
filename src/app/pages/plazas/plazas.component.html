@@ -1,13 +1,13 @@
 <div class="mt-5 pb-8 bg-gray-900 h-screen">
     <div class="animate__animated animate__zoomIn bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">    
-        <div class="flex items-center justify-between bg-green-500 rounded-top text-white p-3 text-2xl font-hairline">
-                <div>
+        <div class="flex items-center justify-between border-t-8 border-green-500 bg-gray-100 rounded-top text-white p-3 text-2xl font-hairline">
+                <div class="text-gray-600 md:ml-5">
                     <i class="fas fa-tree mr-1"></i>
                     <span class="ml-1">
                         Listado de plazas
                     </span>
                 </div>
-                <a (click)="generarReporte()" class="border shadow p-2 cursor-pointer text-xl ml-5 md:mr-4 bg-white text-gray-600 rounded px-3">
+                <a (click)="generarReporte()" class="border shadow p-2 cursor-pointer hover:text-green-500 text-xl ml-5 md:mr-4 bg-white text-gray-600 rounded px-3">
                     <i class="fas fa-print"></i>
                 </a>
             </div>
@@ -125,13 +125,13 @@
                                                 <div class="text-center">
                                                     <div class="flex items-center justify-center">
                                                         <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                            <i [routerLink]="['/dashboard/plazas/tareas', plaza._id]" class="fas fa-tasks text-xl mr-2 text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
+                                                            <i [routerLink]="['/dashboard/plazas/tareas', plaza._id]" class="border p-2 rounded shadow px-3 far fa-clipboard text-xl mr-2 text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
                                                         </p>
                                                         <p class="text-gray-900 focus:outline-none whitespace-no-wrap"> 
-                                                            <i [routerLink]="['/dashboard/plazas/tareas/historial', plaza._id]" class="fas fa-history text-xl mr-2 text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
+                                                            <i [routerLink]="['/dashboard/plazas/tareas/historial', plaza._id]" class="border p-2 rounded shadow px-3 fas fa-history text-xl mr-2 text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
                                                         </p>
                                                         <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                            <i [routerLink]="['/dashboard/plazas/editar', plaza._id]" class="fas fa-pencil-alt text-xl text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
+                                                            <i [routerLink]="['/dashboard/plazas/editar', plaza._id]" class="border p-2 rounded shadow px-3 fas fa-pencil-alt text-xl text-gray-600 hover:text-green-500 cursor-pointer outline-none"></i>
                                                         </p>
                                                     </div>
                                                 </div>

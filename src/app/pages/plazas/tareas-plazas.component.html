@@ -1,10 +1,13 @@
 <div class="mt-5 pb-8 bg-gray-900 h-screen">
-    <div class="animate__animated animate__zoomIn bg-white shadow w-11/12 md:w-1/2 xl:w-1/4 mr-auto ml-auto rounded">
-        <div class="flex items-center bg-green-500 p-3 text-white text-xl"> 
-            <i routerLink="/dashboard/plazas" class="fas mr-3 fa-arrow-circle-left cursor-pointer outline-none"></i>                
+    <div class="animate__animated animate__zoomIn bg-white border-t-8 border-green-500 shadow w-11/12 md:w-1/2 xl:w-1/4 mr-auto ml-auto rounded">
+        <div class="flex items-center text-gray-600 bg-gray-100 p-3 text-white text-lg"> 
+            <i routerLink="/dashboard/plazas" class="fas mr-3 text-xl fa-arrow-circle-left bg-white p-2 px-3 border shadow cursor-pointer hover:text-green-500 outline-none"></i>                
             <div>
                 <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
-                <span *ngIf="!loading"> {{ plaza.descripcion }} </span>
+                <div *ngIf="!loading" class="flex-col">
+                    <h1 class="font-semibold"> {{ plaza.descripcion }} </h1>
+                    <span class="text-xs bg-green-500 text-white rounded-full p-1 px-2 font-semibold"> <i class="fas fa-calendar-plus"></i> Nueva tarea </span>
+                </div>
             </div> 
         </div>
         <form class="p-4"
@@ -37,14 +40,16 @@
     </div>
 
 
-    <div class="mt-6 animate__animated animate__zoomIn bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
-        <div class="flex items-center justify-between bg-green-500 rounded-top text-2xl text-white p-3 font-hairline">
+    <div class="mt-6 animate__animated animate__zoomIn border-t-8 border-green-500 rounded-t bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
+        <div class="flex items-center text-gray-600 justify-between bg-gray-100 rounded-top text-xl text-white p-3 font-hairline">
             <div class="flex items-center">
-                <i class="fas fa-tasks mr-1"></i>
-                <span class="ml-1"> Listado de tareas </span>
+                <div>
+                    <h1 class="ml-1 font-semibold"> Tareas </h1>
+                    <span class="text-xs border rounded-full bg-green-500 text-white p-1 px-2 font-semibold"> <i class="fas fa-clipboard"></i> Listado de tareas </span>
+                </div>
             </div>
             <a [routerLink]="['/dashboard/plazas/tareas/historial', plaza._id]" class="border bg-white shadow rounded px-3 py-1 md:mr-4">
-                <i class="fas fa-history text-xl text-gray-600"></i>
+                <i class="fas fa-history text-xl text-gray-600 hover:text-green-500"></i>
             </a>
         </div>
         <div *ngIf="tareas.length == 0" class="bg-white text-md text-gray-500 p-4">
@@ -109,10 +114,10 @@
                                             <div class="text-center">
                                                 <div class="flex items-center justify-center">
                                                     <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                        <i [routerLink]="['/dashboard/plazas/tareas/editar', tarea._id]" class="fas fa-pencil-alt text-xl text-gray-700 hover:text-green-500 cursor-pointer outline-none mr-3"></i>
+                                                        <i [routerLink]="['/dashboard/plazas/tareas/editar', tarea._id]" class="border p-2 rounded shadow px-3 bg-white fas fa-pencil-alt text-xl text-gray-700 hover:text-green-500 cursor-pointer outline-none mr-3"></i>
                                                     </p>
                                                     <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                        <i (click)="completarTarea(tarea._id)" class="fas fa-check-circle text-2xl text-gray-700 hover:text-green-500 cursor-pointer outline-none"></i>
+                                                        <i (click)="completarTarea(tarea._id)" class="border p-2 rounded shadow px-3 fas fa-check-circle bg-white text-xl text-gray-700 hover:text-green-500 cursor-pointer outline-none"></i>
                                                     </p>
                                                 </div>
                                             </div>

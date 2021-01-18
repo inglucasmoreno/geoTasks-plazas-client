@@ -1,11 +1,11 @@
 <div class="bg-gray-900 h-screen mt-5">
-    <div class="w-11/12 w-11/12 md:w-1/2 shadow rounded mr-auto ml-auto bg-white">
-        <div class="text-white bg-green-500 p-2">
+    <div class="animate__animated animate__zoomIn w-11/12 w-11/12 md:w-1/2 shadow rounded mr-auto ml-auto bg-white border-t-8 border-green-500">
+        <div class="text-gray-600 bg-gray-100 p-3">
             <div *ngIf="!loading" class="ml-2 flex items-center">
-                <i routerLink="/dashboard/plazas" class="fas mr-2 text-2xl fa-arrow-circle-left cursor-pointer outline-none"></i>
+                <i routerLink="/dashboard/plazas" class="fas mr-2 text-xl fa-arrow-circle-left cursor-pointer outline-none border p-2 px-3 shadow rounded bg-white hover:text-green-500"></i>
                 <div class="ml-1">
-                    <h1 class="text-xl"> {{ plaza.descripcion }} </h1>
-                    <h3 class="text-xs font-semibold"> Historial de Tareas </h3>
+                    <h1 class="text-lg font-semibold"> {{ plaza.descripcion }} </h1>
+                    <span class="text-xs border p-1 px-3 bg-green-500 text-white rounded-full font-semibold"> <i class="fas fa-history"></i> Historial de Tareas </span>
                 </div>
             </div>
             <div *ngIf="loading" class="p-2"> 

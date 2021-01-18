@@ -6,7 +6,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin-top: 80px;
+    margin-top: 85px;
 }
 
 .map-wrapper-edit {
@@ -15,7 +15,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  margin-top: 330px;
+  margin-top: 350px;
   height: 350px;
 }
 
@@ -27,7 +27,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin-top: 250px;
+    margin-top: 260px;
   }
 
   .map-wrapper-edit {
@@ -36,7 +36,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    margin-top: 480px;
+    margin-top: 520px;
     height: 350px;
   }
 }
@@ -44,6 +44,11 @@
   
 .map-border {
   border: 5px solid #10b981;
+  height: 100%;
+}
+
+.map-border-editar {
+  border: 5px solid #f3f4f6;
   height: 100%;
 }
 
