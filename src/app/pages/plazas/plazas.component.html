@@ -7,7 +7,7 @@
                         Listado de plazas
                     </span>
                 </div>
-                <a (click)="generarReporte()" class="border shadow p-2 cursor-pointer hover:text-green-500 text-xl ml-5 md:mr-4 bg-white text-gray-600 rounded px-3">
+                <a (click)="generarReporte()" *ngIf="total != 0" class="border shadow p-2 cursor-pointer hover:text-green-500 text-xl ml-5 md:mr-4 bg-white text-gray-600 rounded px-3">
                     <i class="fas fa-print"></i>
                 </a>
             </div>

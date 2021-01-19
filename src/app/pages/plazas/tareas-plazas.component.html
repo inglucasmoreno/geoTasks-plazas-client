@@ -48,8 +48,8 @@
                     <span class="text-xs border rounded-full bg-green-500 text-white p-1 px-2 font-semibold"> <i class="fas fa-clipboard"></i> Listado de tareas </span>
                 </div>
             </div>
-            <a [routerLink]="['/dashboard/plazas/tareas/historial', plaza._id]" class="border bg-white shadow rounded px-3 py-1 md:mr-4">
-                <i class="fas fa-history text-xl text-gray-600 hover:text-green-500"></i>
+            <a (click)="reporte()" *ngIf="totalTareas != 0" class="border bg-white shadow rounded px-3 py-2 md:mr-4 cursor-pointer text-gray-600  hover:text-green-500">
+                <i class="fas fa-print text-xl"></i>
             </a>
         </div>
         <div *ngIf="tareas.length == 0" class="bg-white text-md text-gray-500 p-4">

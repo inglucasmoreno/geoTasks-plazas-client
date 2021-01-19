@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-// Seteo de fuentes para PDF Make
+// Seteo de fuentes para PDFMake
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 PdfMakeWrapper.setFonts(pdfFonts);

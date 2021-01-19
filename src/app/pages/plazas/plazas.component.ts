@@ -6,8 +6,6 @@ import {PdfMakeWrapper, Table, Txt} from 'pdfmake-wrapper';
 import { Plaza } from '../../models/plaza.model';
 import { PlazasService } from '../../services/plazas.service';
 
-type TableRow = [string, string];
-
 @Component({
   selector: 'app-plazas',
   templateUrl: './plazas.component.html',
@@ -72,7 +70,7 @@ export class PlazasComponent implements OnInit {
                                                                     .end;
     
     // Titulo
-    const titulo = new Txt(`Reporte de plazas | Fecha - ${hoy}`).margin([0,30,0,0]).fontSize(14).end;
+    const titulo = new Txt(`Reporte de plazas | Fecha de reporte - ${hoy}`).margin([0,30,0,0]).fontSize(11).end;
 
     // Subtitulo
     const subTitulo = new Txt(`PLAZAS TOTALES: ${this.totalReporte}`).bold().fontSize(11).margin([0,10,0,0]).end;
@@ -84,6 +82,7 @@ export class PlazasComponent implements OnInit {
       ...plazas
     ])
     .alignment('justify')
+    .fontSize(11)
     .widths(['*', 100])
     .margin([0,10,0,0])
     .layout({
