@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import Swal from 'sweetalert2';
 import {PdfMakeWrapper, Table, Txt} from 'pdfmake-wrapper';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { Plaza } from '../../models/plaza.model';
 import { PlazasService } from '../../services/plazas.service';
@@ -32,7 +33,8 @@ export class PlazasComponent implements OnInit {
   public plazasReporte: Plaza[] = [];
   public totalReporte = 0;
   
-  constructor(private plazasService: PlazasService) { }
+  constructor(private plazasService: PlazasService,
+              private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
     this.listarPlazas();
@@ -91,13 +93,23 @@ export class PlazasComponent implements OnInit {
       },    
     }).end;
     
+    const isMobile = this.deviceService.isMobile();
+    const isDesktop = this.deviceService.isDesktop();
+    const isTablet = this.deviceService.isTablet();
+
     // GENERACION DEL REPORTE EN PDF
     // pdf.pageOrientation('landscape');
     pdf.header(header);  // Agrega cabecera
     pdf.add(titulo);     // Agrega titulo
     pdf.add(subTitulo);  // Agrega subtitulo
     pdf.add(tabla);      // Agrega Tabla
-    pdf.create().open(); // Se genera PDF y se abre en otra pestaña  
+    
+    if(isMobile || isTablet){
+      pdf.create().download(); // Se genera PDF y se descarga    
+    }else{
+      pdf.create().open(); // Se genera PDF y se abre en otra pestaña  
+    }
+
   }
 
   extractData(): any{

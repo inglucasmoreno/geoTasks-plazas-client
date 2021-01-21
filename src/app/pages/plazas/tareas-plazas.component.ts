@@ -1,5 +1,6 @@
 import { Component, ModuleWithComponentFactories, OnInit } from '@angular/core';
 import {PdfMakeWrapper, Table, Txt} from 'pdfmake-wrapper';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -29,7 +30,8 @@ export class TareasPlazasComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private tareasService: TareasService,
               private plazasService: PlazasService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
     this.actualizarLista();
@@ -72,12 +74,21 @@ export class TareasPlazasComponent implements OnInit {
   })
   .end;
 
+  const isMobile = this.deviceService.isMobile();
+  const isDesktop = this.deviceService.isDesktop();
+  const isTablet = this.deviceService.isTablet();
+
   pdf.add(header);
   pdf.add(titulo);
   pdf.add(subTitulo);
   pdf.add(totales);
   pdf.add(tabla);
-  pdf.create().open();
+
+  if(isMobile || isTablet){
+    pdf.create().download(); // Se genera PDF y se descarga    
+  }else{
+    pdf.create().open(); // Se genera PDF y se abre en otra pestaña  
+  }
 
 }
 

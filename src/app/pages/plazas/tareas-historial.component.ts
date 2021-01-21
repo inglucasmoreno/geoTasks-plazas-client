@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { PlazasService } from 'src/app/services/plazas.service';
 import { TareasService } from '../../services/tareas.service';
 import {PdfMakeWrapper, Table, Txt} from 'pdfmake-wrapper';
@@ -25,7 +26,8 @@ export class TareasHistorialComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private plazasService: PlazasService,
-              private tareasService: TareasService) { }
+              private tareasService: TareasService,
+              private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({ id }) => {
@@ -70,13 +72,22 @@ export class TareasHistorialComponent implements OnInit {
     })
     .end;
 
+    const isMobile = this.deviceService.isMobile();
+    const isDesktop = this.deviceService.isDesktop();
+    const isTablet = this.deviceService.isTablet();
+    
     pdf.pageOrientation('landscape');
     pdf.add(header);
     pdf.add(titulo);
     pdf.add(subTitulo);
     pdf.add(totales);
     pdf.add(tabla);
-    pdf.create().open();
+    
+    if(isMobile || isTablet){
+      pdf.create().download(); // Se genera PDF y se descarga    
+    }else{
+      pdf.create().open(); // Se genera PDF y se abre en otra pestaña  
+    }
 
   }
 
