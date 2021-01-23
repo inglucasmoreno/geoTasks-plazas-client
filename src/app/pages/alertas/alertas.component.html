@@ -256,10 +256,10 @@
                                         <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                             <div class="text-center">
                                                 <div class="ml-3 flex items-center justify-center">
-                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                    <p title="Ir a la plaza" class="text-gray-900 focus:outline-none whitespace-no-wrap">
                                                         <i [routerLink]="['/dashboard/plazas/tareas/', tarea.plaza._id]" class="fas fa-tree text-xl border p-2 rounded shadow px-3 bg-white text-gray-700 hover:text-red-500 cursor-pointer outline-none mr-3"></i>
                                                     </p>
-                                                    <p class="text-gray-900 focus:outline-none whitespace-no-wrap">
+                                                    <p title="Completar tarea" class="text-gray-900 focus:outline-none whitespace-no-wrap">
                                                         <i (click)="completarTarea(tarea._id, tarea.plaza._id)" class="fas fa-check-circle text-xl rounded p-2 shadow px-3 text-gray-700 bg-white hover:text-red-500 cursor-pointer outline-none"></i>
                                                     </p>
                                                 </div>
