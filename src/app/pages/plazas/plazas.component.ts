@@ -6,6 +6,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { Plaza } from '../../models/plaza.model';
 import { PlazasService } from '../../services/plazas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plazas',
@@ -33,7 +34,9 @@ export class PlazasComponent implements OnInit {
   public plazasReporte: Plaza[] = [];
   public totalReporte = 0;
   
-  constructor(private plazasService: PlazasService,
+  constructor(
+              private router: Router,
+              private plazasService: PlazasService,
               private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
@@ -51,7 +54,7 @@ export class PlazasComponent implements OnInit {
 
   // Reporte de las plazas en PDF
   reporte(): void {
-    
+      
     // Fecha de hoy
     const hoy = moment().format('DD/MM/YYYY');
     

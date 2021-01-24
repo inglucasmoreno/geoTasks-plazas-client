@@ -1,138 +1,149 @@
-<div class="mt-5 pb-8 bg-gray-900 h-screen">
-    <div class="animate__animated animate__zoomIn bg-white border-t-8 border-green-500 shadow w-11/12 md:w-1/2 xl:w-1/4 mr-auto ml-auto rounded">
-        <div class="flex items-center text-gray-600 bg-gray-100 p-3 text-white text-lg"> 
-            <i routerLink="/dashboard/plazas" class="fas mr-3 text-xl fa-arrow-circle-left bg-white p-2 px-3 border shadow cursor-pointer hover:text-green-500 outline-none"></i>                
-            <div>
-                <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
-                <div *ngIf="!loading" class="flex-col">
-                    <h1 class="font-semibold"> {{ plaza.descripcion }} </h1>
-                    <span class="text-xs bg-green-500 text-white rounded-full p-1 px-2 font-semibold"> <i class="fas fa-calendar-plus"></i> Nueva tarea </span>
-                </div>
-            </div> 
-        </div>
-        <form class="p-4"
-                autocomplete="off"
-                [formGroup]="plazaForm"
-                (submit)="agregarTarea()">
-            <div>
-                <label for="tarea" class="text-gray-700 font-semibold"> Nueva tarea </label>
-                <input 
-                    id="tarea"
-                    type="text" 
-                    class="shadow border w-full mt-2 rounded p-2 text-gray-700" 
-                    formControlName="tarea"
-                    placeholder="Descripción">
+ 
+<app-tarjeta width="w-11/12 md:w-1/2 xl:w-1/4">
+    <div class="flex items-center text-gray-600 bg-gray-100 p-3 text-white text-lg"> 
+        <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>                
+        <div>
+            <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
+            <div *ngIf="!loading" class="flex-col">
+                <h1 class="font-semibold"> {{ plaza.descripcion }} </h1>
+                <app-pastilla
+                    texto="Nueva tarea"
+                    icono="fas fa-calendar-plus">
+                </app-pastilla>
             </div>
-            <div class="mt-3">
-                <label for="fecha_limite" class="font-semibold text-gray-600"> Fecha limite </label>
-                <input 
-                    class="w-full bg-white text-gray-600 border shadow p-3 mt-2 outline-none" 
-                    id="fecha_limite" 
-                    formControlName="fechaLimite"
-                    [min]="hoy"
-                    type="date">
-            </div>    
-                
-            <button [disabled]="loading" [ngClass]="{' bg-green-300 cursor-wait':loading, 'bg-green-500':!loading }" class="text-white p-1 rounded shadow mt-5 w-full">
-                Agregar
-            </button>
-        </form>
+        </div> 
     </div>
+    <form class="p-4"
+            autocomplete="off"
+            [formGroup]="plazaForm"
+            (submit)="agregarTarea()">
+        <div>
+            <label for="tarea" class="text-gray-700 font-semibold"> Nueva tarea </label>
+            <input 
+                id="tarea"
+                type="text" 
+                class="shadow border w-full mt-2 rounded p-2 text-gray-700" 
+                formControlName="tarea"
+                placeholder="Descripción">
+        </div>
+        <div class="mt-3">
+            <label for="fecha_limite" class="font-semibold text-gray-600"> Fecha limite </label>
+            <input 
+                class="w-full bg-white text-gray-600 border shadow p-3 mt-2 outline-none" 
+                id="fecha_limite" 
+                formControlName="fechaLimite"
+                [min]="hoy"
+                type="date">
+        </div>    
+        <app-boton-realizar [loading]="loading">
+            Agregar
+        </app-boton-realizar>
+    </form>
+</app-tarjeta>
 
-
-    <div class="mt-6 animate__animated animate__zoomIn border-t-8 border-green-500 rounded-t bg-white w-11/12 lg:w-1/2 mr-auto ml-auto">
-        <div class="flex items-center text-gray-600 justify-between bg-gray-100 rounded-top text-xl text-white p-3 font-hairline">
-            <div class="flex items-center">
-                <div>
-                    <h1 class="ml-1 font-semibold"> Tareas </h1>
-                    <span class="text-xs border rounded-full bg-green-500 text-white p-1 px-2 font-semibold"> <i class="fas fa-clipboard"></i> Listado de tareas </span>
-                </div>
+<app-tarjeta>
+    <div class="flex items-center text-gray-600 justify-between bg-gray-100 rounded-top text-xl text-white p-3 font-hairline">
+        <div class="flex items-center">
+            <div>
+                <h1 class="ml-1 font-semibold"> Tareas </h1>
+                <app-pastilla
+                    texto="Listado de tareas"
+                    icono="fas fa-clipboard">
+                </app-pastilla>
             </div>
-            <a (click)="reporte()" title="Reporte - Tareas pendientes (PDF)" *ngIf="totalTareas != 0" class="border bg-white shadow rounded px-3 py-2 md:mr-4 cursor-pointer text-gray-600  hover:text-green-500">
-                <i class="fas fa-print text-xl"></i>
-            </a>
         </div>
-        <div *ngIf="tareas.length == 0" class="bg-white text-md text-gray-500 p-4">
-            <h1> No hay ninguna tareas pendientes... </h1>
-        </div>
-        <!-- component -->
-        <div *ngIf="tareas.length != 0" class="antialiased font-sans bg-gray-100 shadow">
-            <div class="container mx-auto px-4 sm:px-8">
-                <div class="py-8">
-                    <div>
-                        <h2 class="text-xl text-gray-700 font-semibold leading-tight"> Tareas pendientes ({{ totalTareas }}) </h2> 
-                    </div>
-                    <div class="md:flex items-center md:justify-between mr-3">
-                       
-                    </div>
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        
-                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                            <table class="min-w-full leading-normal">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Descripción
-                                        </th>
-                                        <th
-                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Fecha creación
-                                        </th>
-                                        <th
-                                            class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Fecha limite
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Acciones
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody *ngIf="!loading">
-                                    <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of tareas">
-                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                            <div class="flex items-center">
-                                                <div>
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{ tarea.descripcion }}
-                                                    </p>
-                                                </div>
+        <app-boton-imprimir 
+                *ngIf="totalTareas != 0" 
+                titulo="Reporte - Plazas (PDF)" 
+                (reporte)="reporte()"
+            ></app-boton-imprimir>
+    </div>
+    <div *ngIf="tareas.length == 0" class="bg-white text-md text-gray-500 p-4">
+        <h1> No hay ninguna tareas pendientes... </h1>
+    </div>
+    <!-- component -->
+    <div *ngIf="tareas.length != 0" class="antialiased font-sans bg-gray-100 shadow">
+        <div class="container mx-auto px-4 sm:px-8">
+            <div class="py-8">
+                <div>
+                    <h2 class="text-xl text-gray-700 font-semibold leading-tight"> Tareas pendientes ({{ totalTareas }}) </h2> 
+                </div>
+                <div class="md:flex items-center md:justify-between mr-3">
+                    
+                </div>
+                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                    
+                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                        <table class="min-w-full leading-normal">
+                            <thead>
+                                <tr>
+                                    <th
+                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Descripción
+                                    </th>
+                                    <th
+                                        class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Fecha creación
+                                    </th>
+                                    <th
+                                        class="px-5 text-center py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Fecha limite
+                                    </th>
+                                    <th
+                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Acciones
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="!loading">
+                                <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of tareas">
+                                    <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div class="flex items-center">
+                                            <div>
+                                                <p class="text-gray-900 whitespace-no-wrap">
+                                                    {{ tarea.descripcion }}
+                                                </p>
                                             </div>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
-                                            <p class="text-green-700 font-semibold whitespace-no-wrap">
-                                                {{ tarea.fecha_creacion | fecha:'mostrar'}}
-                                            </p>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
-                                            <p class="text-red-700 font-semibold whitespace-no-wrap">
-                                                {{ tarea.fecha_limite | fecha:'mostrar'}}
-                                            </p>
-                                        </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 text-sm">
-                                            <div class="text-center">
-                                                <div class="flex items-center justify-center">
-                                                    <p title="Editar tarea" class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                        <i [routerLink]="['/dashboard/plazas/tareas/editar', tarea._id]" class="border p-2 rounded shadow px-3 bg-white fas fa-pencil-alt text-xl text-gray-700 hover:text-green-500 cursor-pointer outline-none mr-3"></i>
-                                                    </p>
-                                                    <p title="Completar tarea" class="text-gray-900 focus:outline-none whitespace-no-wrap">
-                                                        <i (click)="completarTarea(tarea._id)" class="border p-2 rounded shadow px-3 fas fa-check-circle bg-white text-xl text-gray-700 hover:text-green-500 cursor-pointer outline-none"></i>
-                                                    </p>
-                                                </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                        <p class="text-green-700 font-semibold whitespace-no-wrap">
+                                            {{ tarea.fecha_creacion | fecha:'mostrar'}}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 text-sm text-center">
+                                        <p class="text-red-700 font-semibold whitespace-no-wrap">
+                                            {{ tarea.fecha_limite | fecha:'mostrar'}}
+                                        </p>
+                                    </td>
+                                    <td class="px-5 py-5 border-b border-gray-200 text-sm">
+                                        <div class="text-center">
+                                            <div class="flex items-center justify-center">
+                                                <app-boton-tabla 
+                                                    ruta='/dashboard/plazas/tareas/editar'
+                                                    titulo="Editar tarea"
+                                                    icono="fas fa-pencil-alt" 
+                                                    [id]="tarea._id">
+                                                </app-boton-tabla>
+                                                <app-boton-tabla 
+                                                    titulo="Completar tarea"
+                                                    icono="fas fa-check-circle"
+                                                    (completar)="completarTarea(tarea._id)">
+                                                </app-boton-tabla>   
                                             </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
-                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="loading" class="text-gray-500 p-5 text-center">
+                            <i class="fas fa-spinner animate-spin"></i> Cargando tareas
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>
+</app-tarjeta>
+
 <br><br>
-</div>

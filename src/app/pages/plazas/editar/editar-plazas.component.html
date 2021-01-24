@@ -1,47 +1,45 @@
-<div class="bg-gray-900 h-screen">
-    <div class="bg-white shadow w-11/12 md:w-1/2 xl:w-1/4 mt-3 mr-auto ml-auto rounded">
-        <div class="flex items-center text-gray-600 border-t-8 border-green-500 text-white bg-gray-100 p-3">
-            <i routerLink="/dashboard/plazas" class="border p-2 px-3 bg-white fas mr-2 fa-arrow-circle-left text-xl cursor-pointer outline-none hover:text-green-500"></i>
-            <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
-            <div class="ml-2" *ngIf="!loading">
-                <h1 class="text-lg font-semibold"> {{ plaza.descripcion }} </h1>
-                <span class="text-xs border rounded-full text-white bg-green-500 p-1 px-2 font-semibold"> <i class="fas fa-pencil-alt"></i> Editando </span>
-            </div>
-        </div>
-            <form 
-                [formGroup]="plazaForm"
-                (submit)="actualizarPlaza()"
-                class="bg-gray-100 p-4">
-                <label 
-                    for="descripcion_id"
-                    class="font-semibold "
-                    >
-                    Descripción
-                </label>
-                <input  
-                    id="descripcion_id"
-                    type="text"
-                    class="shadow border p-2 mt-2 rounded w-full"
-                    formControlName="descripcion"
-                    placeholder="Nombre de la plaza"
-                    >
-                <button 
-                    [disabled]="loading"
-                    [ngClass]="{'bg-green-300 cursor-wait':loading, 'bg-green-500':!loading}"
-                    class="shadow border text-white rounded p-2 mt-3 w-full">
-                    Actualizar
-                </button>
-            </form>
-    </div>
-    
-    <div class="map-wrapper-edit w-11/12 md:w-1/2 mr-auto ml-auto shadow border-t-8 border-green-500">
-        <div class="bg-gray-100 text-gray-600 p-1 pt-2">
-            <h1 *ngIf="loading" class="text-center"> <i class="fas fa-spinner animate-spin"></i> Cargando geolocalización </h1>
-        </div>
-        <div class="map-border-editar">
-            <div id="map"></div>
+<app-tarjeta width="w-11/12 md:w-1/2 xl:w-1/4">
+    <div class="flex items-center text-gray-600 text-white bg-gray-100 p-3">
+        <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>      
+        <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
+        <div class="ml-2" *ngIf="!loading">
+            <h1 class="text-lg font-semibold"> {{ plaza.descripcion }} </h1>
+            <app-pastilla
+                texto="Editando"
+                icono="fas fa-pencil-alt">
+            </app-pastilla>
         </div>
     </div>
+    <form 
+        [formGroup]="plazaForm"
+        (submit)="actualizarPlaza()"
+        class="bg-gray-100 p-4">
+        <label 
+            for="descripcion_id"
+            class="font-semibold "
+            >
+            Descripción
+        </label>
+        <input  
+            id="descripcion_id"
+            type="text"
+            class="shadow border p-2 mt-2 rounded w-full"
+            formControlName="descripcion"
+            placeholder="Nombre de la plaza"
+            >
+        <app-boton-realizar [loading]="loading">
+            Actualizar
+        </app-boton-realizar>
+    </form>
+</app-tarjeta>
 
-
+<!-- Mapa -->
+<div class="map-wrapper-edit w-11/12 md:w-1/2 mr-auto ml-auto shadow border-t-8 border-green-500">
+    <div class="bg-gray-100 text-gray-600 p-1 pt-2">
+        <h1 *ngIf="loading" class="text-center"> <i class="fas fa-spinner animate-spin"></i> Cargando geolocalización </h1>
+    </div>
+    <div class="map-border-editar">
+        <div id="map"></div>
+    </div>
 </div>
+

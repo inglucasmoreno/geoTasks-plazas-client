@@ -2,22 +2,23 @@
     <div *ngIf="loading" class="ml-auto mr-auto bg-white w-11/12 sm:w-3/4 xl:w-1/2 p-4 border shadow rounded text-gray-600"> 
         <i class="fas fa-spinner animate-spin mr-1"></i> Cargando contenido
     </div>
-    <div *ngIf="!loading" class="animate__animated animate__zoomIn">
-        <div routerLink="/dashboard/alertas" *ngIf="totalVencidas != 0" class="bg-white outline-none shadow w-11/12 sm:w-3/4 xl:w-1/2 mr-auto ml-auto border-l-8 border-red-500 hover:text-green text-center p-10 rounded text-gray-700 cursor-pointer">
-            <i class="fas fa-bell mr-1 text-5xl"></i>
-            <h1 class="mt-4 font-semibold"> Alertas </h1>
-        </div>
-        <div routerLink="/dashboard/geolocalizar" class="mt-4 bg-white outline-none shadow w-11/12 sm:w-3/4 xl:w-1/2 mr-auto ml-auto border-l-8 border-green-500 hover:text-green text-center p-10 rounded text-gray-700 cursor-pointer">
-            <i class="fas fa-globe-americas mr-1 text-5xl"></i>
-            <h1 class="mt-4 font-semibold"> Geolocalizar plazas </h1>
-        </div>
-        <div routerLink="/dashboard/plazas" class="bg-white outline-none shadow w-11/12 sm:w-3/4 xl:w-1/2 mt-5 mr-auto ml-auto border-l-8 border-green-500 hover:text-green text-center p-10 rounded text-gray-700 cursor-pointer">
-            <i class="fas fa-tree mr-1 text-5xl"></i>
-            <h1 class="mt-4 font-semibold"> Tus plazas </h1>
-        </div>
-        <!-- <div routerLink="/dashboard/usuarios" class="bg-white shadow w-11/12 sm:w-3/4 xl:w-1/2 mt-5 mr-auto ml-auto border-l-8 border-green-500 hover:text-green text-center p-10 rounded text-gray-700 cursor-pointer">
-            <i class="fas fa-user mr-1 text-5xl"></i>
-            <h1 class="mt-4 font-semibold"> Usuarios </h1>
-        </div> -->
+    <div *ngIf="!loading" class="animate__animated animate__zoomIn">     
+        <app-boton-home
+                *ngIf="totalVencidas != 0"
+                titulo="Alertas"
+                icono="fas fa-bell"
+                ruta="/dashboard/alertas"
+                borde="border-red-500"
+            ></app-boton-home>
+        <app-boton-home 
+                titulo="Geolocalizar plazas" 
+                icono="fas fa-globe-americas"
+                ruta="/dashboard/geolocalizar"   
+            ></app-boton-home>
+        <app-boton-home
+                titulo="Tus plazas"
+                icono="fas fa-tree"
+                ruta="/dashboard/plazas"
+            ></app-boton-home>
     </div>
 </div>

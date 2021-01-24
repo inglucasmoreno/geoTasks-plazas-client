@@ -16,6 +16,7 @@ import { EditarPlazasComponent } from './plazas/editar/editar-plazas.component';
 import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
 import { AlertasComponent } from './alertas/alertas.component';
 import { TareasHistorialComponent } from './plazas/tareas-historial.component';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TareasHistorialComponent } from './plazas/tareas-historial.component';
     RouterModule,
     SharedModule,
     ReactiveFormsModule,
-    PipesModule
+    PipesModule,
+    ComponentsModule
   ]
 })
 export class PagesModule { }

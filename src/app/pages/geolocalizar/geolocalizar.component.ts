@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import * as L from 'leaflet';
 import * as moment from 'moment';
-import { FechaPipe } from 'src/app/pipes/fecha.pipe';
-import Swal from 'sweetalert2';
+
 import { PlazasService } from '../../services/plazas.service';
 import { TareasService } from '../../services/tareas.service';
 
