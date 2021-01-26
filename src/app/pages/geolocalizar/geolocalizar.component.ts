@@ -5,6 +5,7 @@ import * as moment from 'moment';
 
 import { PlazasService } from '../../services/plazas.service';
 import { TareasService } from '../../services/tareas.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-geolocalizar',
@@ -13,14 +14,17 @@ import { TareasService } from '../../services/tareas.service';
 })
 export class GeolocalizarComponent implements OnInit {
 
+  public usuarioLogin;
   public map;
   public marcadores = [];
   public loading = true;
 
-  constructor(private plazasService: PlazasService,
+  constructor(private authService: AuthService,
+              private plazasService: PlazasService,
               private tareasService: TareasService) { }
   
   ngOnInit(): void {
+    this.usuarioLogin = this.authService.usuario; 
     this.crearMapa();
     this.actualizarMapa();
   }
@@ -45,38 +49,39 @@ export class GeolocalizarComponent implements OnInit {
     mainLayer.addTo(this.map);
 
     this.map.on('click', async (e) => {
-        
-      const { value: plaza } = await Swal.fire({
-        title: 'Insertando plaza',
-        confirmButtonText: 'Crear nueva plaza',
-        showCancelButton: true,
-        cancelButtonText: 'Cancelar',
-        input: 'text',
-        inputLabel: 'Ingrese descripción',
-        inputPlaceholder: 'Nombre de la plaza',
-      });
       
-      if(plaza){
-        
-        const data = {
-          descripcion: plaza,
-          lat: e.latlng.lat.toString(),
-          lng: e.latlng.lng.toString()
-        }
-      
-        this.plazasService.nuevaPlaza(data).subscribe( () => {
-          Swal.fire({
-            title: 'Completado',
-            text: `${plaza} ha sido creada`,
-            showConfirmButton: false,
-            icon: 'success',
-            timer: 1000
-          })
-          this.actualizarMapa();
+      if(this.usuarioLogin.role === 'ADMIN_ROLE'){
+        const { value: plaza } = await Swal.fire({
+          title: 'Insertando plaza',
+          confirmButtonText: 'Crear nueva plaza',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          input: 'text',
+          inputLabel: 'Ingrese descripción',
+          inputPlaceholder: 'Nombre de la plaza',
         });
-
+        
+        if(plaza){
+          
+          const data = {
+            descripcion: plaza,
+            lat: e.latlng.lat.toString(),
+            lng: e.latlng.lng.toString()
+          }
+        
+          this.plazasService.nuevaPlaza(data).subscribe( () => {
+            Swal.fire({
+              title: 'Completado',
+              text: `${plaza} ha sido creada`,
+              showConfirmButton: false,
+              icon: 'success',
+              timer: 1000
+            })
+            this.actualizarMapa();
+          });
+          }
         }
-      });    
+      }); 
   }
 
   actualizarMapa(): void {

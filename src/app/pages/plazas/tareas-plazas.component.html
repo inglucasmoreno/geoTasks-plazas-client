@@ -1,5 +1,5 @@
  
-<app-tarjeta width="w-11/12 md:w-1/2 xl:w-1/4">
+<app-tarjeta width="w-11/12 md:w-1/2 xl:w-1/4" *ngIf="usuarioLogin.role == 'ADMIN_ROLE'">
     <div class="flex items-center text-gray-600 bg-gray-100 p-3 text-white text-lg"> 
         <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>                
         <div>
@@ -44,8 +44,13 @@
 <app-tarjeta>
     <div class="flex items-center text-gray-600 justify-between bg-gray-100 rounded-top text-xl text-white p-3 font-hairline">
         <div class="flex items-center">
+            <app-boton-volver 
+                *ngIf="usuarioLogin.role != 'ADMIN_ROLE'"
+                ruta="/dashboard/plazas">
+            </app-boton-volver>
             <div>
-                <h1 class="ml-1 font-semibold"> Tareas </h1>
+                <h1 *ngIf="usuarioLogin.role != 'ADMIN_ROLE'" class="ml-1 font-semibold"> {{ plaza.descripcion }} </h1>
+                <h1 *ngIf="usuarioLogin.role == 'ADMIN_ROLE'" class="ml-1 font-semibold"> Tareas </h1>
                 <app-pastilla
                     texto="Listado de tareas"
                     icono="fas fa-clipboard">
@@ -53,7 +58,7 @@
             </div>
         </div>
         <app-boton-imprimir 
-                *ngIf="totalTareas != 0" 
+                *ngIf="totalTareas != 0 && usuarioLogin.role == 'ADMIN_ROLE'" 
                 titulo="Reporte - Tareas pendientes (PDF)" 
                 (reporte)="reporte()"
             ></app-boton-imprimir>
@@ -120,6 +125,7 @@
                                         <div class="text-center">
                                             <div class="flex items-center justify-center">
                                                 <app-boton-tabla 
+                                                    *ngIf="usuarioLogin.role == 'ADMIN_ROLE'"
                                                     ruta='/dashboard/plazas/tareas/editar'
                                                     titulo="Editar tarea"
                                                     icono="fas fa-pencil-alt" 

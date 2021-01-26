@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TareasService } from '../../services/tareas.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +12,17 @@ import { TareasService } from '../../services/tareas.service';
 })
 export class HomeComponent implements OnInit {
 
+  public usuarioLogin;
+
   public totalVencidas = 0;
   public loading = true;
 
   constructor(private tareasService: TareasService,
+              private authService:AuthService,
               private router: Router) { }
 
   ngOnInit(): void {
+    this.usuarioLogin = this.authService.usuario;
     this.listarVencidas();
   }
 

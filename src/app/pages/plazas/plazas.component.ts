@@ -6,7 +6,7 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { Plaza } from '../../models/plaza.model';
 import { PlazasService } from '../../services/plazas.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-plazas',
@@ -17,8 +17,10 @@ import { Router } from '@angular/router';
 
 export class PlazasComponent implements OnInit {
 
+  public usuarioLogin;
+
   public plazas: Plaza[] = [];
-  
+
   // Paginador y filtrado
   public total = 0;
   public limit = 10;
@@ -35,11 +37,12 @@ export class PlazasComponent implements OnInit {
   public totalReporte = 0;
   
   constructor(
-              private router: Router,
+              private authService: AuthService,
               private plazasService: PlazasService,
               private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
+    this.usuarioLogin = this.authService.usuario;
     this.listarPlazas();
   }
 
@@ -123,7 +126,7 @@ export class PlazasComponent implements OnInit {
     this.plazasService.listarPlazas(
       this.limit,
       this.desde,
-      this.filtroActivos,
+      this.usuarioLogin.role == 'ADMIN_ROLE' ? this.filtroActivos : true,
       this.filtroDescripcion
     ).subscribe( resp => {
       this.loading = false;

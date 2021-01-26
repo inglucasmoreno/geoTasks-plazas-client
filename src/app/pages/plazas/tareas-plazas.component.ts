@@ -8,6 +8,7 @@ import * as moment from 'moment';
 
 import { PlazasService } from '../../services/plazas.service';
 import { TareasService } from 'src/app/services/tareas.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-tareas-plazas',
@@ -16,6 +17,8 @@ import { TareasService } from 'src/app/services/tareas.service';
   ]
 })
 export class TareasPlazasComponent implements OnInit {
+
+  public usuarioLogin;
 
   public hoy = moment().format('YYYY-MM-DD');
   public loading = true;
@@ -28,12 +31,14 @@ export class TareasPlazasComponent implements OnInit {
   });
 
   constructor(private activatedRoute: ActivatedRoute,
+              private authService: AuthService,
               private tareasService: TareasService,
               private plazasService: PlazasService,
               private fb: FormBuilder,
               private deviceService: DeviceDetectorService) { }
 
   ngOnInit(): void {
+    this.usuarioLogin = this.authService.usuario;
     this.actualizarLista();
   }
 

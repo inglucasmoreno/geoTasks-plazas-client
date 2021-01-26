@@ -17,6 +17,9 @@ import { EditarTareasComponent } from './plazas/editar/editar-tareas.component';
 import { AlertasComponent } from './alertas/alertas.component';
 import { TareasHistorialComponent } from './plazas/tareas-historial.component';
 import { ComponentsModule } from '../components/components.module';
+import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario.component';
+import { EditarUsuarioComponent } from './usuarios/editar/editar-usuario.component';
+import { EditarPasswordComponent } from './usuarios/editar/editar-password.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { ComponentsModule } from '../components/components.module';
     EditarTareasComponent,
     AlertasComponent,
     TareasHistorialComponent,
+    NuevoUsuarioComponent,
+    EditarUsuarioComponent,
+    EditarPasswordComponent,
   ],
   imports: [
     CommonModule,

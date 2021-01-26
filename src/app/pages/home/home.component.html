@@ -4,21 +4,27 @@
     </div>
     <div *ngIf="!loading" class="animate__animated animate__zoomIn">     
         <app-boton-home
-                *ngIf="totalVencidas != 0"
-                titulo="Alertas"
-                icono="fas fa-bell"
-                ruta="/dashboard/alertas"
-                borde="border-red-500"
-            ></app-boton-home>
+            *ngIf="totalVencidas != 0"
+            titulo="Alertas"
+            icono="fas fa-bell"
+            ruta="/dashboard/alertas"
+            borde="border-red-500"
+        ></app-boton-home>
         <app-boton-home 
-                titulo="Geolocalizar plazas" 
-                icono="fas fa-globe-americas"
-                ruta="/dashboard/geolocalizar"   
-            ></app-boton-home>
+            titulo="Geolocalizar plazas" 
+            icono="fas fa-globe-americas"
+            ruta="/dashboard/geolocalizar"   
+        ></app-boton-home>
         <app-boton-home
-                titulo="Tus plazas"
-                icono="fas fa-tree"
-                ruta="/dashboard/plazas"
-            ></app-boton-home>
+            titulo="Tus plazas"
+            icono="fas fa-tree"
+            ruta="/dashboard/plazas"
+        ></app-boton-home>
+        <app-boton-home
+            *ngIf="usuarioLogin.role == 'ADMIN_ROLE'"
+            titulo="Usuarios"
+            icono="fas fa-user"
+            ruta="/dashboard/usuarios"
+        ></app-boton-home>
     </div>
 </div>

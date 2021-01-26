@@ -7,7 +7,7 @@
             </span>
         </div>
         <app-boton-imprimir 
-                *ngIf="total != 0" 
+                *ngIf="total != 0 && usuarioLogin == 'ADMIN_ROLE'" 
                 titulo="Reporte - Plazas (PDF)" 
                 (reporte)="generarReporte()"
             ></app-boton-imprimir>
@@ -15,14 +15,14 @@
     <!-- component -->
     <div class="antialiased font-sans bg-gray-100 shadow">
         <div class="container mx-auto px-4 sm:px-8">
-            <div class="py-8">
+            <div class="py-4">
                 <div>
                     <h2 class="text-2xl text-gray-700 font-semibold leading-tight"> Plazas ({{ total }}) </h2> 
                 </div>
                 <div class="md:flex items-center md:justify-between mr-3">
-                    <div class="my-2 flex sm:flex-row flex-col">
+                    <div class="my-3 flex sm:flex-row flex-col">
                         <div class="flex flex-row mb-1 sm:mb-0">
-                            <div class="relative">
+                            <div class="relative" *ngIf="usuarioLogin.role == 'ADMIN_ROLE'">
                                 <select #txtLista
                                         (change)="filtradoPorLista(txtLista.value)"
                                         class="appearance-none border h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
@@ -74,6 +74,7 @@
                                         Ultima visita
                                     </th>
                                     <th
+                                        *ngIf="usuarioLogin.role == 'ADMIN_ROLE'"
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         ¿Activo?
                                     </th>
@@ -97,9 +98,9 @@
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm text-center">
                                         {{ plaza.fecha_ultima_visita | fecha:'mostrar'}}
                                     </td>
-                                    <td (click)="actualizarPlaza(plaza)"
+                                    <td *ngIf="usuarioLogin.role == 'ADMIN_ROLE'"
                                         class="px-5 py-5 text-center border-b border-gray-200 bg-white text-sm">
-                                        <app-boton-estado [activo]="plaza.activo"></app-boton-estado>
+                                        <app-boton-estado (click)="actualizarPlaza(plaza)" [activo]="plaza.activo"></app-boton-estado>
                                     </td>
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="text-center">
@@ -110,13 +111,15 @@
                                                         icono="far fa-clipboard" 
                                                         [id]="plaza._id">
                                                     </app-boton-tabla>
-                                                <app-boton-tabla 
+                                                <app-boton-tabla
+                                                        *ngIf="usuarioLogin.role == 'ADMIN_ROLE'" 
                                                         ruta='/dashboard/plazas/tareas/historial' 
                                                         titulo="Historial de tareas"
                                                         icono="fas fa-history" 
                                                         [id]="plaza._id">
                                                     </app-boton-tabla>
-                                                <app-boton-tabla 
+                                                <app-boton-tabla
+                                                        *ngIf="usuarioLogin.role == 'ADMIN_ROLE'"
                                                         ruta='/dashboard/plazas/editar'
                                                         titulo="Editar plaza" 
                                                         icono="fas fa-pencil-alt" 
