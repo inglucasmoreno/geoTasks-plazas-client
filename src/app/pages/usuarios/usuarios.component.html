@@ -1,7 +1,14 @@
 <app-tarjeta>
-    <div class="flex items-center md:ml-4 rounded-top text-gray-600 p-3 text-2xl font-hairline">
-        <i class="fas fa-user mr-2"></i>
-        <span class="ml-1"> Listado de usuarios </span>
+    <div class="flex items-center justify-between md:ml-4 rounded-top text-gray-600 p-3 text-2xl font-hairline">
+        <div class="flex items-center">
+            <i class="fas fa-user mr-2"></i>
+            <span class="ml-1"> Listado de usuarios </span>
+        </div>
+        <app-boton-imprimir 
+            *ngIf="total != 0" 
+            titulo="Reporte - Usuarios (PDF)" 
+            (reporte)="generarReporte()"
+    ></app-boton-imprimir>
     </div>
     <!-- component -->
     <div class="antialiased font-sans bg-gray-100 shadow">

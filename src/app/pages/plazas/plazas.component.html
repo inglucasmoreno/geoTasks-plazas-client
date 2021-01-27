@@ -7,7 +7,7 @@
             </span>
         </div>
         <app-boton-imprimir 
-                *ngIf="total != 0 && usuarioLogin == 'ADMIN_ROLE'" 
+                *ngIf="total != 0 && usuarioLogin.role == 'ADMIN_ROLE'" 
                 titulo="Reporte - Plazas (PDF)" 
                 (reporte)="generarReporte()"
             ></app-boton-imprimir>

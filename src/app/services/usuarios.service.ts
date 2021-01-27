@@ -59,20 +59,20 @@ export class UsuariosService {
   }
 
   // Validacion de token
-  validarToken(): Observable<any>{
-    const token = localStorage.getItem('token') || '';
-    return this.http.get(`${base_url}/auth`, {
-      headers: {
-        'x-token': token
-      }
-    }).pipe(
-      map( (resp: any) => {
-        const { dni, apellido, nombre, email, role, uid, activo} = resp.usuario;
-        this.usuario = new Usuario(uid, dni, apellido, nombre, email, role, activo);
-        localStorage.setItem('token', resp.token);
-        return true;
-      }),
-      catchError( error => of(false)) // El of permite crear un observable<boolean>(false)
-    );
-  }
+  // validarToken(): Observable<any>{
+  //   const token = localStorage.getItem('token') || '';
+  //   return this.http.get(`${base_url}/auth`, {
+  //     headers: {
+  //       'x-token': token
+  //     }
+  //   }).pipe(
+  //     map( (resp: any) => {
+  //       const { dni, apellido, nombre, email, role, uid, activo} = resp.usuario;
+  //       this.usuario = new Usuario(uid, dni, apellido, nombre, email, role, activo);
+  //       localStorage.setItem('token', resp.token);
+  //       return true;
+  //     }),
+  //     catchError( error => of(false)) // El of permite crear un observable<boolean>(false)
+  //   );
+  // }
 }

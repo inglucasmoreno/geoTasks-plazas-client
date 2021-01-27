@@ -14,6 +14,7 @@ import { TareasHistorialComponent } from './plazas/tareas-historial.component';
 import { NuevoUsuarioComponent } from './usuarios/nuevo-usuario.component';
 import { EditarUsuarioComponent } from './usuarios/editar/editar-usuario.component';
 import { EditarPasswordComponent } from './usuarios/editar/editar-password.component';
+import { AdminGuard } from '../guards/admin.guard';
 
 const routes: Routes = [
     {
@@ -25,13 +26,13 @@ const routes: Routes = [
             { path: 'alertas', canActivate: [AuthGuard] , component: AlertasComponent },
             { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
             { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
-            { path: 'plazas/editar/:id', canActivate: [AuthGuard] , component: EditarPlazasComponent },
-            { path: 'plazas/tareas/editar/:id', canActivate: [AuthGuard] , component: EditarTareasComponent },
-            { path: 'plazas/tareas/historial/:id', canActivate: [AuthGuard] , component: TareasHistorialComponent },
-            { path: 'usuarios', canActivate: [AuthGuard] , component: UsuariosComponent },
-            { path: 'usuarios/nuevo', canActivate: [AuthGuard] , component: NuevoUsuarioComponent },
-            { path: 'usuarios/editar/:id', canActivate: [AuthGuard] , component: EditarUsuarioComponent },
-            { path: 'usuarios/password/:id', canActivate: [AuthGuard] , component: EditarPasswordComponent },
+            { path: 'plazas/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarPlazasComponent },
+            { path: 'plazas/tareas/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarTareasComponent },
+            { path: 'plazas/tareas/historial/:id', canActivate: [AuthGuard, AdminGuard] , component: TareasHistorialComponent },
+            { path: 'usuarios', canActivate: [AuthGuard, AdminGuard] , component: UsuariosComponent },
+            { path: 'usuarios/nuevo', canActivate: [AuthGuard, AdminGuard] , component: NuevoUsuarioComponent },
+            { path: 'usuarios/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarUsuarioComponent },
+            { path: 'usuarios/password/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarPasswordComponent },
         ]
     }
 ];

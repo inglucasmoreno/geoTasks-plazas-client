@@ -65,7 +65,7 @@ export class PlazasComponent implements OnInit {
     const pdf = new PdfMakeWrapper();
   
     pdf.info({
-      title: `Reporte plazas | ${hoy}`,
+      title: `Plazas | ${hoy}`,
       author: 'GeoTasks - Plazas',
       subject: 'Reportes'
     });
@@ -90,7 +90,7 @@ export class PlazasComponent implements OnInit {
       ...plazas
     ])
     .alignment('justify')
-    .fontSize(11)
+    .fontSize(10)
     .widths(['*', 100])
     .margin([0,10,0,0])
     .layout({

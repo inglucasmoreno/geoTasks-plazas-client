@@ -69,7 +69,7 @@ export class TareasPlazasComponent implements OnInit {
     ...tareasReporte
   ])
   .alignment('justify')
-  .fontSize(11)
+  .fontSize(10)
   .margin([0,10,0,0])
   .widths(['*', 100, 100])
   .layout({

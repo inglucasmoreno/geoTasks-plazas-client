@@ -35,7 +35,7 @@ export class NuevoUsuarioComponent implements OnInit {
 
   nuevoUsuario(): void | boolean{
     const {password, repetir} = this.usuarioForm.value;
-  
+
     if (this.usuarioForm.status === 'INVALID'){
       Swal.fire({
         icon: 'info',
@@ -75,4 +75,5 @@ export class NuevoUsuarioComponent implements OnInit {
       });
     });
   }
+
 }

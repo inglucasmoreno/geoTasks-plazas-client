@@ -39,7 +39,7 @@ export class AuthService {
   }
 
   // Validar token
-  validarToken(): Observable<any>{
+  validarToken(): Observable<boolean>{
     const token = localStorage.getItem('token');
     return this.http.get(`${baseUrl}/auth`, {
       headers: { 'x-token': token }
@@ -54,8 +54,22 @@ export class AuthService {
     );
   }
 
+  // Devuelve "true" si es ADMIN o "false" si no lo es
+  validarAdmin(): Observable<boolean>{
+    const token = localStorage.getItem('token');
+    return this.http.get(`${baseUrl}/auth`,{headers:{'x-token': token}}).pipe(
+      map( (resp: any) => {
+        if(resp.usuario.role === 'ADMIN_ROLE'){
+          return true;
+        }else{
+          return false;
+        }      
+      })
+    );
+  }
+
   // Proteccion de login
-  proteccionLogin(): Observable<any>{
+  proteccionLogin(): Observable<boolean>{
     const token = localStorage.getItem('token');
     return this.http.get(`${baseUrl}/auth`, {
       headers: { 'x-token': token }
