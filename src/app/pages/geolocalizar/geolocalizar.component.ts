@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import { PlazasService } from '../../services/plazas.service';
 import { TareasService } from '../../services/tareas.service';
 import { AuthService } from '../../services/auth.service';
+import { TiposService } from 'src/app/services/tipos.service';
 
 @Component({
   selector: 'app-geolocalizar',
@@ -15,18 +16,30 @@ import { AuthService } from '../../services/auth.service';
 export class GeolocalizarComponent implements OnInit {
 
   public usuarioLogin;
+  public tipos = {};
   public map;
   public marcadores = [];
   public loading = true;
 
   constructor(private authService: AuthService,
               private plazasService: PlazasService,
-              private tareasService: TareasService) { }
+              private tareasService: TareasService,
+              private tiposServices: TiposService) { }
   
   ngOnInit(): void {
     this.usuarioLogin = this.authService.usuario; 
     this.crearMapa();
     this.actualizarMapa();
+    this.listarTipos();
+  }
+
+  listarTipos(): void {
+    this.tiposServices.listarTipos().subscribe( resp => {
+      resp.tipos.map( ({_id, descripcion}) => {
+        this.tipos[_id] = descripcion;
+      }); 
+      console.log(this.tipos);
+    });
   }
 
   crearMapa(): void {
@@ -49,40 +62,65 @@ export class GeolocalizarComponent implements OnInit {
     mainLayer.addTo(this.map);
 
     this.map.on('click', async (e) => {
-      
+
       if(this.usuarioLogin.role === 'ADMIN_ROLE'){
-        const { value: plaza } = await Swal.fire({
-          title: 'Insertando plaza',
-          confirmButtonText: 'Crear nueva plaza',
+        
+        // Seleccion de tipo de elemento
+        const { value: tipo } = await Swal.fire({
+          title: 'Seleccionar tipo',
+          input: 'select',
+          inputOptions: this.tipos,
           showCancelButton: true,
+          confirmButtonText: 'Seleccionar',
           cancelButtonText: 'Cancelar',
-          input: 'text',
-          inputLabel: 'Ingrese descripción',
-          inputPlaceholder: 'Nombre de la plaza',
-        });
+        })
+
+        if(tipo){
+
+          // Nombre del elemento
+          const { value: nombre } = await Swal.fire({
+            title: `Ingresar nombre`,
+            input: 'text',
+            inputPlaceholder: 'Nombre',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Crear'
+          })
         
-        if(plaza){
-          
+          // Si tiene un tipo y un nombre se crea el nuevo elemento
+          if(tipo && nombre){
+            Swal.fire({
+              icon: 'success',
+              title: 'Completado',
+              text: `Elemento creado correctamente`,
+              confirmButtonText: 'Entendido'
+            });
+
           const data = {
-            descripcion: plaza,
+            descripcion: nombre,
             lat: e.latlng.lat.toString(),
-            lng: e.latlng.lng.toString()
+            lng: e.latlng.lng.toString(),
+            tipo              
           }
-        
+
           this.plazasService.nuevaPlaza(data).subscribe( () => {
             Swal.fire({
               title: 'Completado',
-              text: `${plaza} ha sido creada`,
+              text: `Elemento creado correctamente`,
               showConfirmButton: false,
               icon: 'success',
               timer: 1000
             })
             this.actualizarMapa();
           });
-          }
         }
-      }); 
-  }
+      }
+      
+      }
+
+    }
+       
+  )}
 
   actualizarMapa(): void {
   
