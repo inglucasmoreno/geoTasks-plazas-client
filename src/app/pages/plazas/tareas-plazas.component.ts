@@ -22,7 +22,7 @@ export class TareasPlazasComponent implements OnInit {
 
   public hoy = moment().format('YYYY-MM-DD');
   public loading = true;
-  public plaza = { _id: '', descripcion: '', fecha_ultima_visita: '' };
+  public plaza = { _id: '', descripcion: '', fecha_ultima_visita: '', tipo: {} };
   public tareas = [];
   public totalTareas = 0;
   public plazaForm = this.fb.group({
@@ -110,6 +110,7 @@ extractData(): any{
     this.loading = true;
     this.activatedRoute.params.subscribe( ({id}) => {
       this.plazasService.getPlaza(id).subscribe( (plaza: any) => {
+        console.log(plaza);
         this.plaza = plaza;
         this.listarTareas(id);
         this.tareasService.actualizarAlerta().subscribe();

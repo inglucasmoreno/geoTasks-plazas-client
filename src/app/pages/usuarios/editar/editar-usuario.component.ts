@@ -27,7 +27,8 @@ export class EditarUsuarioComponent implements OnInit {
   constructor(private router: Router,
               private fb: FormBuilder,
               private activatedRoute: ActivatedRoute,
-              private usuariosService: UsuariosService) { }
+              private usuariosService: UsuariosService,
+              ) { }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(({id}) => {

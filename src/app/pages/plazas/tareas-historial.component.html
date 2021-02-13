@@ -4,7 +4,7 @@
             <div class="flex items-center">
                 <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>
                 <div>
-                    <h1 class="text-lg font-semibold"> {{ plaza.descripcion }} </h1>
+                    <h1 class="text-lg font-semibold"> {{ plaza.tipo['descripcion'] }} {{ plaza.descripcion }} </h1>
                     <app-pastilla
                         texto="Historial de tareas"
                         icono="fas fa-history">

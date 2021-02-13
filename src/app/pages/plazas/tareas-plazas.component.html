@@ -5,7 +5,7 @@
         <div>
             <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
             <div *ngIf="!loading" class="flex-col">
-                <h1 class="font-semibold"> {{ plaza.descripcion }} </h1>
+                <h1 class="font-semibold"> {{ plaza.tipo['descripcion'] }} {{ plaza.descripcion }} </h1>
                 <app-pastilla
                     texto="Nueva tarea"
                     icono="fas fa-calendar-plus">

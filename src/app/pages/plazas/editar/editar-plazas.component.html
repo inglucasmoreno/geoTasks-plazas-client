@@ -3,7 +3,7 @@
         <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>      
         <span *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span>
         <div class="ml-2" *ngIf="!loading">
-            <h1 class="text-lg font-semibold"> {{ plaza.descripcion }} </h1>
+            <h1 class="text-lg font-semibold"> {{ plaza.tipo['descripcion'] }} {{ plaza.descripcion }} </h1>
             <app-pastilla
                 texto="Editando"
                 icono="fas fa-pencil-alt">
@@ -14,19 +14,33 @@
         [formGroup]="plazaForm"
         (submit)="actualizarPlaza()"
         class="bg-gray-100 p-4">
-        <label 
-            for="descripcion_id"
-            class="font-semibold "
-            >
-            Descripción
-        </label>
-        <input  
-            id="descripcion_id"
-            type="text"
-            class="shadow border p-2 mt-2 rounded w-full"
-            formControlName="descripcion"
-            placeholder="Nombre de la plaza"
-            >
+        <div>
+            <label 
+                for="descripcion_id"
+                class="font-semibold "
+                >
+                Nombre
+            </label>
+            <input  
+                id="descripcion_id"
+                type="text"
+                class="shadow border p-2 mt-2 rounded w-full"
+                formControlName="descripcion"
+                placeholder="Nombre de la plaza"
+                >
+        </div>
+        <div class="mt-2">
+            <label for="tipo" class="font-semibold"> Tipo </label>
+            <select 
+                class="w-full p-2 shadow rounded mt-1"
+                formControlName="tipo"
+                >
+                <option 
+                    *ngFor="let tipo of tipos"
+                    [value]="tipo._id"> {{ tipo.descripcion }} </option>
+            </select>
+        </div>
+
         <app-boton-realizar [loading]="loading">
             Actualizar
         </app-boton-realizar>

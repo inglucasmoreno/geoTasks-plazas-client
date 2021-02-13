@@ -1,6 +1,7 @@
 export class Plaza {
     constructor(
         public descripcion: string,
+        public tipo: string,
         public lng: string,
         public lat: string,
         public fecha_ultima_visita?: string,

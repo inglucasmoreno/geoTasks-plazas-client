@@ -14,7 +14,7 @@ import * as moment from 'moment';
 })
 export class TareasHistorialComponent implements OnInit {
 
-  public plaza = {_id:'', descripcion: '' };
+  public plaza = {_id:'', descripcion: '', tipo: {} };
   public tareas = [];
   public loading = true;
   
@@ -54,7 +54,7 @@ export class TareasHistorialComponent implements OnInit {
                                                                     .end;
     
     const titulo = new Txt(`Tareas completadas | Fecha del reporte - ${hoy}`).margin([0,10,0,0]).fontSize(12).end;
-    const subTitulo = new Txt(`Ubicación - ${this.plaza.descripcion}`).margin([0,10,0,0]).fontSize(12).bold().end;
+    const subTitulo = new Txt(`Ubicación - ${this.plaza.tipo['descripcion']} ${this.plaza.descripcion}`).margin([0,10,0,0]).fontSize(12).bold().end;
     const totales = new Txt(`TAREAS TOTALES: ${this.totalCompletadas}`).bold().fontSize(11).margin([0,10,0,0]).end;
     const tareasReporte = this.extractData();
     const tabla = new Table([

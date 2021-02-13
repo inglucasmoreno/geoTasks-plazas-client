@@ -38,7 +38,6 @@ export class GeolocalizarComponent implements OnInit {
       resp.tipos.map( ({_id, descripcion}) => {
         this.tipos[_id] = descripcion;
       }); 
-      console.log(this.tipos);
     });
   }
 
@@ -202,7 +201,7 @@ export class GeolocalizarComponent implements OnInit {
           <div class="border rounded shadow">
             <h1 class="font-semibold bg-green-500 text-white py-2 px-4"> 
             <i class="fas fa-tree mr-1"></i>
-              ${m.descripcion} 
+              ${m.tipo.descripcion} | ${m.descripcion} 
             </h1>
             <h1 class="font-semibold bg-gray-500 text-white p-1"> 
               Ultima visita 
@@ -226,7 +225,7 @@ export class GeolocalizarComponent implements OnInit {
               <span class="p-1"> ${totalVencidas} </span>
             </div>
             </div>
-            <button onclick="location.href='dashboard/plazas/tareas/${m._id}'" routerLink="dashboard/plazas" class="text-white bg-green-500 p-2 shadow rounded w-full mt-2"> Ir a plaza </button>     
+            <button onclick="location.href='dashboard/plazas/tareas/${m._id}'" routerLink="dashboard/plazas" class="text-white bg-green-500 p-2 shadow rounded w-full mt-2"> Ir a ${m.tipo['descripcion']} </button>     
           `);
           marker.addTo(this.map);
           circle.addTo(this.map);

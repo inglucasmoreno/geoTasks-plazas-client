@@ -4,6 +4,7 @@ import { PlazasService } from '../../../services/plazas.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import * as L from 'leaflet';
+import { TiposService } from 'src/app/services/tipos.service';
 
 
 @Component({
@@ -15,10 +16,11 @@ import * as L from 'leaflet';
 export class EditarPlazasComponent implements OnInit {
 
   public loading = true;
-
+  public tipos = [];
   public plaza = { 
     _id: '',
     descripcion: '',
+    tipo: {},
     tareas: [],
     lat: '',
     lng: '',
@@ -31,20 +33,26 @@ export class EditarPlazasComponent implements OnInit {
   public id;
 
   public plazaForm = this.fb.group({
-    descripcion: ['', Validators.required]
+    descripcion: ['', Validators.required],
+    tipo: ['', Validators.required]
   });
 
   constructor(private activatedRoute: ActivatedRoute,
               private plazasService: PlazasService,
               private fb: FormBuilder,
-              private router: Router) { }
+              private router: Router,
+              private tiposService: TiposService) { }
 
   ngOnInit(): void {
+    this.listarTipos();
     this.activatedRoute.params.subscribe( ({ id }) => { 
       this.id = id; 
       this.plazasService.getPlaza(this.id).subscribe( plaza => {
         this.plaza = plaza;
-        this.plazaForm.setValue({ descripcion: plaza.descripcion });
+        this.plazaForm.setValue({ 
+          descripcion: plaza.descripcion, 
+          tipo: plaza.tipo['_id']
+        });
         this.crearMapa();
         this.actualizarMapa();
         this.loading = false;
@@ -52,10 +60,19 @@ export class EditarPlazasComponent implements OnInit {
     });
   }
   
+  listarTipos(): void {
+    this.tiposService.listarTipos().subscribe( ({tipos}) => {
+      this.tipos = tipos;
+    });
+  }
+
   getPlaza(): void {
     this.plazasService.getPlaza(this.id).subscribe( plaza => {
       this.plaza = plaza;
-      this.plazaForm.setValue({ descripcion: plaza.descripcion });
+      this.plazaForm.setValue({ 
+        descripcion: plaza.descripcion, 
+        tipo: plaza.tipo['_id']
+      });
       this.loading = false;
     });
   }

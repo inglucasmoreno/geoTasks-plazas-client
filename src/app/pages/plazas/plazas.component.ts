@@ -86,12 +86,12 @@ export class PlazasComponent implements OnInit {
     // Tabla
     const plazas = this.extractData();
     const tabla = new Table([
-      [new Txt(`Descripción`).bold().end, new Txt('Ultima visita').bold().end],
+      [new Txt('Nombre').bold().end, new Txt('Tipo').bold().end, new Txt('Ultima visita').bold().end],
       ...plazas
     ])
     .alignment('justify')
     .fontSize(10)
-    .widths(['*', 100])
+    .widths(['*', '*', 100])
     .margin([0,10,0,0])
     .layout({
       fillColor: (rowIndex: number, node: any, columnIndex: number) => {
@@ -119,7 +119,7 @@ export class PlazasComponent implements OnInit {
   }
 
   extractData(): any{
-    return this.plazasReporte.map( plaza => [plaza.descripcion, moment(plaza.fecha_ultima_visita).format('DD/MM/YYYY')] );
+    return this.plazasReporte.map( plaza => [ plaza.descripcion, plaza.tipo['descripcion'] ,moment(plaza.fecha_ultima_visita).format('DD/MM/YYYY')] );
   }
 
   listarPlazas(): void{
