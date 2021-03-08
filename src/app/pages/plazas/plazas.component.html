@@ -46,10 +46,16 @@
                                     </path>
                                 </svg>
                             </span>
-                            <input #txtDescripcion
-                                    (keyup)="filtradoPorDescripcion(txtDescripcion.value)" 
-                                    placeholder="Descripción"
-                                    class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                            <div class="flex items-center">
+                                <input #txtDescripcion
+                                        (keyup)="filtradoPorDescripcion(txtDescripcion.value)" 
+                                        placeholder="Descripción"
+                                        class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                        <div *ngIf="loading" class="text-gray-600 text-2xl ml-2">
+                                            <i class="fas fa-spinner animate-spin"></i>
+                                        </div>
+                            </div>
+                        
                         </div>
                     </div>
                     <div>
@@ -88,7 +94,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="!loading">
+                            <tbody>
                                 <tr class="animate__animated animate__fadeIn" *ngFor="let plaza of plazas">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <div class="flex items-center">
@@ -144,22 +150,22 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                            <i class="fas fa-spinner animate-spin"></i> Cargando plazas
-                        </div>
                         <div 
-                            *ngIf="!loading"
                             class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                             <span class="text-xs xs:text-sm text-gray-900">
                                 Mostrando {{total > 0 ? desde + 1 : 0 }} - {{ hasta < total ? hasta : total}} de {{ total }} plazas
                             </span>
                             <div class="inline-flex mt-2 xs:mt-0">
                                 <button (click)="actualizarDesdeHasta('anterior')"
-                                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                        [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                        [disabled]="loading"
+                                        class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-l focus:outline-none">
                                     Anterior
                                 </button>
                                 <button (click)="actualizarDesdeHasta('siguiente')"
-                                        class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                        [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                        [disabled]="loading"
+                                        class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-r focus:outline-none">
                                     Siguiente
                                 </button>
                             </div>

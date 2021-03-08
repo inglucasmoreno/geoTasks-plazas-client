@@ -1,6 +1,6 @@
 <app-tarjeta>
     <div class="text-gray-600 bg-gray-100 p-3">
-        <div *ngIf="!loading" class="ml-2 flex items-center justify-between">
+        <div class="ml-2 flex items-center justify-between">
             <div class="flex items-center">
                 <app-boton-volver ruta="/dashboard/plazas"></app-boton-volver>
                 <div>
@@ -17,9 +17,6 @@
                     (reporte)="reporte()"
                 ></app-boton-imprimir>
         </div>
-        <div *ngIf="loading" class="p-2"> 
-            <span> <i class="fas fa-spinner animate-spin"></i> Cargando plaza </span> 
-        </div>
     </div>
     <div *ngIf="totalCompletadas === 0" class="bg-white p-3">
         <p class="text-gray-500"> No hay tareas completadas en esta plaza </p>
@@ -28,8 +25,13 @@
     <div *ngIf="totalCompletadas !== 0" class="antialiased font-sans bg-gray-100 shadow">
         <div class="container mx-auto px-4 sm:px-8">
             <div class="py-8">
-                <div>
-                    <h2 class="text-xl text-gray-700 font-semibold leading-tight"> Tareas completadas ({{ totalCompletadas }}) </h2> 
+                <div class="flex items-center">
+                    <div>
+                        <h2 class="text-xl text-gray-700 font-semibold leading-tight"> Tareas completadas ({{ totalCompletadas }}) </h2> 
+                    </div>
+                    <div *ngIf="loading" class="text-gray-600 text-2xl ml-2">
+                        <i class="fas fa-spinner animate-spin"></i>
+                    </div>
                 </div>
                 <div class="md:flex items-center md:justify-between mr-3">
                     
@@ -58,7 +60,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="!loading">
+                            <tbody>
                                 <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'completada':tarea.fecha_completada) == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of tareas">
                                     <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                         <div class="flex items-center">
@@ -87,22 +89,22 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                            <i class="fas fa-spinner animate-spin"></i> Cargando tareas
-                        </div>
                         <div 
-                        *ngIf="!loading"
                         class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                         <span class="text-xs xs:text-sm text-gray-900">
                             Mostrando {{totalCompletadas > 0 ? desde + 1 : 0 }} - {{ hasta < totalCompletadas ? hasta : totalCompletadas}} de {{ totalCompletadas }} plazas
                         </span>
                         <div class="inline-flex mt-2 xs:mt-0">
                             <button (click)="paginador('anterior')"
-                                    class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                    [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                    [disabled]="loading"
+                                    class="text-sm bg-gray-300  text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
                                 Anterior
                             </button>
                             <button (click)="paginador('siguiente')"
-                                    class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                    [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                    [disabled]="loading"
+                                    class="text-sm bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
                                 Siguiente
                             </button>
                         </div>

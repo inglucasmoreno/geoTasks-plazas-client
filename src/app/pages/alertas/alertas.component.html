@@ -10,15 +10,7 @@
     <p class="p-5"> No hay notificaciones disponibles </p>
 </app-tarjeta>
 
-<app-tarjeta *ngIf="loading">
-    <div class="flex items-center p-3 text-xl text-gray-600 bg-gray-100">
-        <app-boton-volver ruta="/dashboard/home"></app-boton-volver>
-        <h1 class="text-gray-800"> Alertas del sistema </h1>
-    </div>
-    <p class="p-5" *ngIf="loading"> <i class="fas fa-spinner animate-spin"></i> Cargando tareas </p> 
-</app-tarjeta>
-
-<div class="mt-6 bg-gray-900 h-screen" *ngIf="totales.todas > 0 && !loading">
+<div class="mt-6 bg-gray-900 h-screen" *ngIf="totales.todas > 0">
     <div *ngIf="totales.porVencer != 0" class="animate__animated animate__zoomIn w-11/12 sm:w-1/2 xl:w-1/4 p-2 mr-auto ml-auto flex items-center justify-between shadow bg-gray-100 text-white mt-3 rounded"> 
         <h2 class="ml-2 p-2 bg-yellow-500 rounded-full font-semibold px-3"> 
             <i class="fas fa-hourglass-half mr-1"></i>
@@ -54,17 +46,22 @@
                     <div class="md:flex items-center md:justify-between mr-3">
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="block relative">
-                                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                        <path
-                                            d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                        </path>
-                                    </svg>
-                                </span>
-                                <input #txtDescripcion
-                                       (keyup)="filtradoDescripcionPorVencer(txtDescripcion.value)" 
-                                       placeholder="Tarea"
-                                       class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                <div class="flex items-center">
+                                    <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                        <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                            <path
+                                                d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                    <input #txtDescripcion
+                                           (keyup)="filtradoDescripcionPorVencer(txtDescripcion.value)" 
+                                           placeholder="Tarea"
+                                           class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                    <div *ngIf="loading" class="text-gray-600 text-2xl ml-2">
+                                        <i class="fas fa-spinner animate-spin"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,7 +92,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="!loading">
+                                <tbody>
                                     <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of porVencer">
                                         <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                             <div class="flex items-center">
@@ -146,22 +143,22 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
-                            </div>
                             <div 
-                            *ngIf="!loading"
                             class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                 <span class="text-xs xs:text-sm text-gray-900">
                                     Mostrando {{totales.porVencer> 0 ? paginador.desdePorVencer + 1 : 0 }} - {{ paginador.hastaPorVencer < totales.porVencer ? paginador.hastaPorVencer : totales.porVencer}} de {{ totales.porVencer }} tareas
                                 </span>
                                 <div class="inline-flex mt-2 xs:mt-0">
                                     <button (click)="paginadorPorVencer('anterior')"
-                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                            [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                            [disabled]="loading"
+                                            class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-l focus:outline-none">
                                         Anterior
                                     </button>
                                     <button (click)="paginadorPorVencer('siguiente')"
-                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                            [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                            [disabled]="loading"
+                                            class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-r focus:outline-none">
                                         Siguiente
                                     </button>
                                 </div>
@@ -192,17 +189,22 @@
                     <div class="md:flex items-center md:justify-between mr-3">
                         <div class="my-2 flex sm:flex-row flex-col">
                             <div class="block relative">
-                                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                                    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                        <path
-                                            d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                        </path>
-                                    </svg>
-                                </span>
-                                <input #txtDescripcion
-                                       (keyup)="filtradoDescripcionVencidas(txtDescripcion.value)" 
-                                       placeholder="Tarea"
-                                       class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                <div class="flex items-center">
+                                    <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                        <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                            <path
+                                                d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                            </path>
+                                        </svg>
+                                    </span>
+                                    <input #txtDescripcion
+                                           (keyup)="filtradoDescripcionVencidas(txtDescripcion.value)" 
+                                           placeholder="Tarea"
+                                           class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                    <div *ngIf="loading" class="text-gray-600 text-2xl ml-2">
+                                        <i class="fas fa-spinner animate-spin"></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -233,7 +235,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody *ngIf="!loading">
+                                <tbody>
                                     <tr [ngClass]="{'bg-yellow-100': (tarea.fecha_limite | fecha:'comparar') == 'PorVencer', 'bg-red-100': (tarea.fecha_limite | fecha:'comparar') == 'Vencida'}" class="animate__animated animate__fadeIn bg-white" *ngFor="let tarea of vencidas">
                                         <td class="px-5 py-5 border-b border-gray-200 text-sm">
                                             <div class="flex items-center">
@@ -285,22 +287,22 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                                <i class="fas fa-spinner animate-spin"></i> Cargando tareas
-                            </div>
                             <div 
-                            *ngIf="!loading"
                             class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
                                 <span class="text-xs xs:text-sm text-gray-900">
                                     Mostrando {{totales.vencidas> 0 ? paginador.desdeVencidas + 1 : 0 }} - {{ paginador.hastaVencidas < totales.vencidas ? paginador.hastaVencidas : totales.vencidas}} de {{ totales.vencidas }} tareas
                                 </span>
                                 <div class="inline-flex mt-2 xs:mt-0">
                                     <button (click)="paginadorVencidas('anterior')"
-                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l focus:outline-none">
+                                            [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                            [disabled]="loading"
+                                            class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-l focus:outline-none">
                                         Anterior
                                     </button>
                                     <button (click)="paginadorVencidas('siguiente')"
-                                            class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r focus:outline-none">
+                                            [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                            [disabled]="loading"
+                                            class="text-sm bg-gray-300 font-semibold py-2 px-4 rounded-r focus:outline-none">
                                         Siguiente
                                     </button>
                                 </div>

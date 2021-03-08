@@ -110,7 +110,6 @@ extractData(): any{
     this.loading = true;
     this.activatedRoute.params.subscribe( ({id}) => {
       this.plazasService.getPlaza(id).subscribe( (plaza: any) => {
-        console.log(plaza);
         this.plaza = plaza;
         this.listarTareas(id);
         this.tareasService.actualizarAlerta().subscribe();

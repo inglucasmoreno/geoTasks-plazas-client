@@ -38,17 +38,22 @@
                             </div>
                         </div>
                         <div class="block relative">
-                            <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
-                                <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
-                                    <path
-                                        d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
-                                    </path>
-                                </svg>
-                            </span>
-                            <input  #txtDni
-                                    (keyup)="filtrarDni(txtDni.value)"
-                                    placeholder="DNI"
-                                    class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                            <div class="flex items-center">
+                                <span class="h-full absolute inset-y-0 left-0 flex items-center pl-2">
+                                    <svg viewBox="0 0 24 24" class="h-4 w-4 fill-current text-gray-500">
+                                        <path
+                                            d="M10 4a6 6 0 100 12 6 6 0 000-12zm-8 6a8 8 0 1114.32 4.906l5.387 5.387a1 1 0 01-1.414 1.414l-5.387-5.387A8 8 0 012 10z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                <input  #txtDni
+                                        (keyup)="filtrarDni(txtDni.value)"
+                                        placeholder="DNI"
+                                        class="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                                <div *ngIf="loading" class="text-gray-600 text-2xl ml-2">
+                                    <i class="fas fa-spinner animate-spin"></i>
+                                </div>                         
+                            </div>
                         </div>
                     </div>
                     <div class="mr-2">
@@ -89,7 +94,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="!loading">
+                            <tbody>
                                 <tr class="animate__animated animate__fadeIn" *ngFor="let usuario of usuarios">
                                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                         <p class="text-gray-900 whitespace-no-wrap">
@@ -135,21 +140,22 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div *ngIf="loading" class="text-gray-500 p-5 text-center">
-                            <i class="fas fa-spinner animate-spin"></i> Cargando usuarios
-                        </div>
-                        <div *ngIf="!loading"
+                        <div
                             class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
                             <span class="text-xs xs:text-sm text-gray-900">
                                 Mostrando {{total > 0 ? desde + 1 : 0}} - {{ hasta < total ? hasta : total}} de {{ total }} usuarios
                             </span>
                             <div class="inline-flex mt-2 xs:mt-0">
                                 <button (click)="actualizarDesdeHasta('anterior')"
-                                        class="text-sm bg-gray-300 hover:bg-gray-400 focus:outline-none text-gray-800 font-semibold py-2 px-4 rounded-l">
+                                        [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                        [disabled]="loading"
+                                        class="text-sm bg-gray-300 focus:outline-none font-semibold py-2 px-4 rounded-l">
                                     Anterior
                                 </button>
                                 <button (click)="actualizarDesdeHasta('siguiente')"
-                                        class="text-sm bg-gray-300 hover:bg-gray-400 focus:outline-none text-gray-800 font-semibold py-2 px-4 rounded-r">
+                                        [ngClass]="{'text-gray-400': loading, 'text-gray-800': !loading}"
+                                        [disabled]="loading"
+                                        class="text-sm bg-gray-300 ocus:outline-none font-semibold py-2 px-4 rounded-r">
                                     Siguiente
                                 </button>
                             </div>

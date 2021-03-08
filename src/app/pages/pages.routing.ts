@@ -19,20 +19,21 @@ import { AdminGuard } from '../guards/admin.guard';
 const routes: Routes = [
     {
         path: 'dashboard',
+        canActivate: [ AuthGuard ],
         component: PagesComponent,
         children: [
-            { path: 'home', canActivate: [AuthGuard] , component: HomeComponent },
-            { path: 'geolocalizar', canActivate: [AuthGuard] , component: GeolocalizarComponent },
-            { path: 'alertas', canActivate: [AuthGuard] , component: AlertasComponent },
-            { path: 'plazas', canActivate: [AuthGuard] , component: PlazasComponent },
-            { path: 'plazas/tareas/:id', canActivate: [AuthGuard] , component: TareasPlazasComponent },
-            { path: 'plazas/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarPlazasComponent },
-            { path: 'plazas/tareas/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarTareasComponent },
-            { path: 'plazas/tareas/historial/:id', canActivate: [AuthGuard, AdminGuard] , component: TareasHistorialComponent },
-            { path: 'usuarios', canActivate: [AuthGuard, AdminGuard] , component: UsuariosComponent },
-            { path: 'usuarios/nuevo', canActivate: [AuthGuard, AdminGuard] , component: NuevoUsuarioComponent },
-            { path: 'usuarios/editar/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarUsuarioComponent },
-            { path: 'usuarios/password/:id', canActivate: [AuthGuard, AdminGuard] , component: EditarPasswordComponent },
+            { path: 'home', component: HomeComponent },
+            { path: 'geolocalizar', component: GeolocalizarComponent },
+            { path: 'alertas', component: AlertasComponent },
+            { path: 'plazas', component: PlazasComponent },
+            { path: 'plazas/tareas/:id', component: TareasPlazasComponent },
+            { path: 'plazas/editar/:id', canActivate: [AdminGuard] , component: EditarPlazasComponent },
+            { path: 'plazas/tareas/editar/:id', canActivate: [AdminGuard] , component: EditarTareasComponent },
+            { path: 'plazas/tareas/historial/:id', canActivate: [AdminGuard] , component: TareasHistorialComponent },
+            { path: 'usuarios', canActivate: [AdminGuard] , component: UsuariosComponent },
+            { path: 'usuarios/nuevo', canActivate: [AdminGuard] , component: NuevoUsuarioComponent },
+            { path: 'usuarios/editar/:id', canActivate: [AdminGuard] , component: EditarUsuarioComponent },
+            { path: 'usuarios/password/:id', canActivate: [AdminGuard] , component: EditarPasswordComponent },
         ]
     }
 ];

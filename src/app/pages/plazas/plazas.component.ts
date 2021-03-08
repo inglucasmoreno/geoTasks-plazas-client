@@ -123,6 +123,7 @@ export class PlazasComponent implements OnInit {
   }
 
   listarPlazas(): void{
+    this.loading = true;
     this.plazasService.listarPlazas(
       this.limit,
       this.desde,

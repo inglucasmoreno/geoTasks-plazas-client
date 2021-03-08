@@ -30,7 +30,7 @@ export class FechaPipe implements PipeTransform {
     if(tipo === 'completada'){
       const fechaLimite = moment(fecha).format('YYYY-MM-DD');
       const fechaComp = moment(fechaCompletada).format('YYYY-MM-DD');
-      const diff = moment(fechaLimite).diff(moment(fechaCompletada), 'days');
+      const diff = moment(fechaLimite).diff(moment(fechaComp), 'days');
       if (diff === 0){
         return 'PorVencer';
       } else if (diff < 0){
